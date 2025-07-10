@@ -4,16 +4,16 @@
 	import '../app.css'
 </script>
 
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
+<nav class="bg-yellow-800 border-gray-200 dark:bg-gray-900">
   
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-  <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5IrWjikFMlzn4QkCIFgA4AyxEeLdOabDW1A&s" class="h-8" alt="Flowbite Logo" />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">V3AL</span>
+    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="1000272312.png" class="h-12" alt="Flowbite Logo" />
+      <span class="self-center text-2xl font-semibold whitespace-nowrap text-amber-50">vival vinis</span>
   </a>
    
   <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-      <button type="button" class="text-orange-900 bg-orange-300 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-300 dark:hover:bg-orange-200 dark:focus:ring-orange-500">Login</button>
+    <button type="button" class="text-amber-50 bg-amber-50 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-300 dark:hover:bg-orange-200 dark:focus:ring-orange-500">Login</button>
       
       <button data-collapse-toggle="navbar-cta" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-cta" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
@@ -24,9 +24,9 @@
   </div>
   
   <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-900">
       <li>
-        <a href="#" class="block py-2 px-3 md:p-0 text-white bg-orange-700 rounded-sm md:bg-transparent md:text-orange-300 md:dark:text-orange-300" aria-current="page">Página Inicial</a>
+        <a href="#" class="block py-2 px-3 md:p-0 text-white bg-orange-700 rounded-sm md:bg-transparent md:text-gray-900 md:dark:text-gray-900" aria-current="page">Página Inicial</a>
       </li>
       <li>
         <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-300 md:dark:hover:text-orange-300 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Sobre</a>
