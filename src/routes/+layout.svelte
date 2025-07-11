@@ -2,18 +2,23 @@
 	let { data, children } = $props();
 	import 'flowbite';
 	import '../app.css'
+  import { goto } from '$app/navigation';
+
+  function paraLogin() {
+    goto('/login');
+  }
 </script>
 
 <nav class="bg-yellow-800 border-gray-200 dark:bg-gray-900">
   
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="1000272312.png" class="h-12" alt="Flowbite Logo" />
       <span class="self-center text-2xl font-semibold whitespace-nowrap text-amber-50">vival vinis</span>
   </a>
    
   <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-    <button type="button" class="text-amber-50 bg-amber-50 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-300 dark:hover:bg-orange-200 dark:focus:ring-orange-500">Login</button>
+    <button type="button" class="text-amber-50 bg-amber-50 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-orange-300 dark:hover:bg-orange-200 dark:focus:ring-orange-500" onclick={paraLogin}>Login</button>
       
       <button data-collapse-toggle="navbar-cta" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-cta" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
@@ -50,7 +55,9 @@
   
 </nav>
 <br>
-  
+<form method="POST" action="/login">
+	<!-- content -->
+</form>
 
 <div class="layout">
 	<main>
