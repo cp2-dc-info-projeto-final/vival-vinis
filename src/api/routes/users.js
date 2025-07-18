@@ -48,13 +48,13 @@ router.get('/:id', async function(req, res, next) {
 /* POST - Criar novo usuário */
 router.post('/', async function(req, res, next) {
   try {
-    const { login, email } = req.body;
+    const { login, email, senha} = req.body;
     
     // Validação básica
-    if (!login || !email) {
+    if (!login || !email || !senha) {
       return res.status(400).json({
         success: false,
-        message: 'Login e email são obrigatórios'
+        message: 'Login, email e senha são obrigatórios'
       });
     }
     
@@ -68,8 +68,8 @@ router.post('/', async function(req, res, next) {
     }
     
     const result = await pool.query(
-      'INSERT INTO usuario (login, email) VALUES ($1, $2) RETURNING *',
-      [login, email]
+      'INSERT INTO usuario (login, email, senha) VALUES ($1, $2, $3) RETURNING *',
+      [login, email, senha]
     );
     
     res.status(201).json({
@@ -90,13 +90,13 @@ router.post('/', async function(req, res, next) {
 router.put('/:id', async function(req, res, next) {
   try {
     const { id } = req.params;
-    const { login, email } = req.body;
+    const { login, email, senha } = req.body;
     
     // Validação básica
-    if (!login || !email) {
+    if (!login || !email || !senha) {
       return res.status(400).json({
         success: false,
-        message: 'Login e email são obrigatórios'
+        message: 'Login, email e senha são obrigatórios'
       });
     }
     
@@ -119,8 +119,8 @@ router.put('/:id', async function(req, res, next) {
     }
     
     const result = await pool.query(
-      'UPDATE usuario SET login = $1, email = $2 WHERE id = $3 RETURNING *',
-      [login, email, id]
+      'UPDATE usuario SET login = $1, email = $2, senha = $3 WHERE id = $4 RETURNING *',
+      [login, email, senha, id]
     );
     
     res.json({

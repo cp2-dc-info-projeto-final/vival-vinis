@@ -1,7 +1,0 @@
-@import 'tailwindcss';
-/*@import 'tailwindcss/forms';*/
-@import "flowbite/src/themes/default";
-
-@theme {
-  /* ... */
-}

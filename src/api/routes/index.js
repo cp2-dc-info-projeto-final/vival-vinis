@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
  return res.status(200).json({
         success: true,
-        message: 'Olá, mundo! Yeeey!'
+        message: 'Olá, mundo! Panetone <3'
       });
 });
 
