@@ -1,24 +1,56 @@
 <script lang="ts">
   // Tabela de usuários
   import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card } from 'flowbite-svelte'; // UI
+  import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Heading } from "flowbite-svelte";
   import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
   import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons'; // ícones
   import { goto } from '$app/navigation'; // navegação
   import api from '$lib/api'; // API backend
   import { onMount } from 'svelte'; // ciclo de vida
-
+	
+  $: filteredUsers = users.filter(user =>
+  user.login.toLowerCase().includes(search.toLowerCase())
+);
+  
   type User = {
     id: number;
     login: string;
     email: string;
   };
 
-  let users: User[] = []; // lista de usuários
+  let users = [{
+    id: 0,
+    login: '',
+    email: ''
+  }]; // lista de usuários
   let loading = true;
   let error = '';
   let deletingId: number | null = null; // id em deleção
   let confirmOpen = false; // modal aberto?
   let confirmTargetId: number | null = null; // id alvo do modal
+
+
+
+  users.pop()
+  let erro ='';
+  let search ='';
+  //busca os usuarios quando o componente é montado
+  async function buscarUsuarios() {
+    try{
+      const res = await fetch('http://localhost:3000/users/');
+      const data = await res.json();
+
+      if (!data.success) {
+        erro = data.message || 'erro ao buscar usuários';
+        return;
+      }
+
+      users = data.data;
+    }
+    catch (e) {
+      erro = 'erro ao conectar com o servidor'
+    }
+  }
 
   // Abre modal de confirmação
   function openConfirm(id: number) {
@@ -77,6 +109,11 @@
 {:else}
   <!-- Tabela para telas médias/grandes -->
   <div class="hidden lg:block">
+    <input
+    type="text"
+    placeholder="pesquisar usuário por nome..."
+    bind:value={search}/>
+    
     <!-- Tabela de usuários -->
     <Table class="w-full max-w-3xl mx-auto my-8 shadow-lg border border-gray-200 rounded-lg">
       <TableHead>
@@ -86,7 +123,7 @@
         <TableHeadCell></TableHeadCell> <!-- coluna para editar/remover -->
       </TableHead>
       <TableBody>
-        {#each users as user}
+        {#each filteredUsers as user}
           <TableBodyRow>
             <TableBodyCell>{user.id}</TableBodyCell>
             <TableBodyCell>{user.login}</TableBodyCell>
