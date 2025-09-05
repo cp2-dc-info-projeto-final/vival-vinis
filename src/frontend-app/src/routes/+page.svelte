@@ -4,21 +4,21 @@
   import {  P, ImagePlaceholder, Skeleton, TextPlaceholder } from "flowbite-svelte";
 </script>
 
+<style>
+    body {
+      background-image: url('/images/1000274060.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
 <Menu />
 
-<div class="text-center p-8 pt-32">
-    <img src= "/images/1000274060.png" class="me-3 h-6 sm:h-15" alt="" />
-<img src= "/images/1000274061.png" class="me-3 h-6 sm:h-15" alt="" />
-<img src= "/images/1000274062.png" class="me-3 h-6 sm:h-15" alt="" />
-<img src= "/images/1000274063.png" class="me-3 h-6 sm:h-15" alt="" />
-	<Heading tag="h2" class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">NOSSO CATÁLOGO</Heading>
-	<P class="text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-4 text-justify">
-		Conheça nosso vasto catálogo de vinis!
-	</P>
-
-	<Skeleton class="mt-16 mb-8" />
-	<ImagePlaceholder class="my-8" />
-	<TextPlaceholder class="my-8" />
+<div class="nav-right">
+    <Heading>NOSSO CATÁLOGO</Heading>
+    <p>
+        Conheça nosso catálogo de vinis!
+    </p>
 </div>
 
 

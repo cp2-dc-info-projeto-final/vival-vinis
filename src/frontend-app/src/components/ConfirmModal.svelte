@@ -13,7 +13,7 @@
 </script>
 
 <Modal bind:open={open} size="sm" class="z-50">
-  <div slot="header" class="flex items-center justify-between bg-gray-100 px-4 py-3 rounded-t-lg border-b border-gray-200">
+ <div slot="header" class="flex items-center justify-between bg-gray-100 px-4 py-3 rounded-t-lg border-b border-gray-200">
     <span class="font-semibold text-gray-700">Confirmação</span>
     <!-- Botão fechar -->
     <Button color="light" size="xs" onclick={onCancel} aria-label="Fechar">
@@ -28,7 +28,7 @@
         <CloseOutline class="w-5 h-5 text-gray-500" /> {cancelText}
       </Button>
       <!-- Botão confirmar -->
-      <Button color="primary" type="button" onclick={onConfirm}>
+      <Button color="light" type="button" onclick={onConfirm}>
         <CheckOutline class="w-5 h-5 text-white" /> {confirmText}
       </Button>
     </div>

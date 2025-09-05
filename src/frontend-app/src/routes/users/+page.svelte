@@ -3,6 +3,21 @@
   import UsersTable from '../../components/UsersTable.svelte';
   import { UserAddOutline  } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+  import { getCurrentUser } from '$lib/auth';
+
+  /**
+   * se não existir usuário redireciona para a página de login
+   * se não for admin redireciona para a página inicial
+   */
+  onMount(async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      goto('/login');
+    } else if (user.role !== 'admin') {
+      goto('/');
+    }
+  });
 </script>
 
 <div class="text-center p-8 pt-32">
