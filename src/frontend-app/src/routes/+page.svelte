@@ -4,14 +4,6 @@
   import {  P, ImagePlaceholder, Skeleton, TextPlaceholder } from "flowbite-svelte";
 </script>
 
-<style>
-    body {
-      background-image: url('/images/1000274060.png');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
-    </style>
 <Menu />
 
 <div class="nav-right">
@@ -19,6 +11,24 @@
     <p>
         Conheça nosso catálogo de vinis!
     </p>
+</div>
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <a href="#">
+        <img class="p-8 rounded-t-lg" src="frontend-app/static/images/marisamonteazul.jpg" alt="product image" />
+    </a>
+    <div class="px-5 pb-5">
+        <a href="#">
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Marisa Monte MM</h5>
+        </a>
+        <div class="flex items-center mt-2.5 mb-5">
+            <div class="flex items-center space-x-1 rtl:space-x-reverse">
+            </div>
+          
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">R$300</span>
+        </div>
+    </div>
 </div>
 
 

@@ -131,7 +131,7 @@
         {id === null ? 'Voltar' : 'Cancelar'}
       </Button>
       <!-- Botão salvar -->
-      <Button type="submit" color="primary" disabled={loading}>
+      <Button type="button" color="light" disabled={loading}>
         <FloppyDiskAltOutline class="inline w-5 h-5 mr-2 align-text-bottom" />
         {id === null ? 'Cadastrar' : 'Salvar'}
       </Button>
