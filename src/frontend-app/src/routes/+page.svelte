@@ -8,13 +8,14 @@
 
 <div class="nav-right">
     <Heading>NOSSO CATÁLOGO</Heading>
-    <p>
-        Conheça nosso catálogo de vinis!
-    </p>
+        <p>
+            Conheça nosso catálogo de vinis!
+        </p>
+
 </div>
 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="p-8 rounded-t-lg" src="frontend-app/static/images/marisamonteazul.jpg" alt="product image" />
+        <img class="p-8 rounded-t-lg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs9KCyhFPvU8XMcJT4iYR2Vyrj5lSQTwnPSA&s" alt="product image" />
     </a>
     <div class="px-5 pb-5">
         <a href="#">
@@ -27,6 +28,25 @@
         </div>
         <div class="flex items-center justify-between">
             <span class="text-3xl font-bold text-gray-900 dark:text-white">R$300</span>
+        </div>
+    </div>
+</div>
+
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <a href="#">
+        <img class="p-8 rounded-t-lg" src="https://a-static.mlcdn.com.br/800x560/lp-vinil-gal-costa-1969-180g-lacrado-polysom/jslartigoscolecionavel/101-1-557/eb362515d4f47b9ba3fdc8be25e324cb.jpeg" alt="product image" />
+    </a>
+    <div class="px-5 pb-5">
+        <a href="#">
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Gal Costa 1969</h5>
+        </a>
+        <div class="flex items-center mt-2.5 mb-5">
+            <div class="flex items-center space-x-1 rtl:space-x-reverse">
+            </div>
+          
+        </div>
+        <div class="flex items-center justify-between">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">R$230</span>
         </div>
     </div>
 </div>

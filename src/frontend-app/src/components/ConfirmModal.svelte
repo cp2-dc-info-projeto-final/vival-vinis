@@ -29,7 +29,7 @@
       </Button>
       <!-- Botão confirmar -->
       <Button color="light" type="button" onclick={onConfirm}>
-        <CheckOutline class="w-5 h-5 text-white" /> {confirmText}
+        <CheckOutline class="w-5 h-5 text-gray" /> {confirmText}
       </Button>
     </div>
   </form>
