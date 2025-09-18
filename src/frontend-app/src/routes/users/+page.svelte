@@ -4,8 +4,29 @@
   import { UserAddOutline  } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
-  import { getCurrentUser } from '$lib/auth';
+  import {logout, getCurrentUser, getToken, type User} from '$lib/auth';
+  import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
 
+
+  let user: User | null = null;
+  let hasToken = false;
+
+  // Verifica token sincronamente (instantâneo)
+  function updateAuthStatus() {
+    hasToken = getToken() !== null;
+    
+    // Se tem token, carrega dados do usuário em background
+    if (hasToken && !user) {
+      getCurrentUser().then(userData => {
+        user = userData;
+      }).catch(() => {
+        user = null;
+        hasToken = false;
+      });
+    } else if (!hasToken) {
+      user = null;
+    }
+  }
   /**
    * se não existir usuário redireciona para a página de login
    * se não for admin redireciona para a página inicial
@@ -18,6 +39,18 @@
       goto('/');
     }
   });
+   // função para logout (só apaga o token)
+   async function handleLogout() {
+    console.log('Logout iniciado...');
+    try {
+      await logout();
+      user = null; // Limpar estado local
+      console.log('Logout concluído, redirecionando...');
+      goto('/login');
+    } catch (error) {
+      console.error('Erro no logout:', error);
+    }
+  }
 </script>
 
 <div class="text-center p-8 pt-32">
@@ -27,6 +60,14 @@
       <UserAddOutline class="w-5 h-5" />
       Cadastrar
     </button>
+    <button 
+      class="ml-2 px-4 py-2 bg-primary-600 items-center hover:bg-primary-700 text-gray rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition"
+      on:click={handleLogout}
+    >
+    <ArrowRightToBracketOutline class="w-4 h-4" />
+      Logout
+    </button>
+    
   </div>
   <UsersTable />
 </div>

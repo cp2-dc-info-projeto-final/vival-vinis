@@ -97,8 +97,6 @@
       <NavLi href="/" class="text-lg font-bold px-4 py-2 text-light-500 text-gray hover:text-yellow-300 hover:bg-gray-700 focus:text-white focus:bg-gray-700 transition-colors rounded-lg">Pagina inicial</NavLi>
       <NavLi href="/about" class="text-lg font-bold px-4 py-2 text-light-500 text-gray hover:text-yellow-300 hover:bg-gray-700 focus:text-white focus:bg-gray-700 transition-colors rounded-lg">Sobre</NavLi>
       <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-light-500 text-gray hover:text-yellow-300 hover:bg-gray-700 focus:text-white focus:bg-gray-700 transition-colors rounded-lg">Login</NavLi>
-   
-  
 
     </NavUl>
   </Navbar>
