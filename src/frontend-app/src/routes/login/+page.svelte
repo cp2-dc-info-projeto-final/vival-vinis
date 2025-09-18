@@ -76,7 +76,7 @@
               </Alert>
             {/if}
   
-            <Button  type="submit"  class="w-full" disabled={loading} >
+            <Button  type="submit" color="gray" class="w-full" disabled={loading} >
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
         </form>
