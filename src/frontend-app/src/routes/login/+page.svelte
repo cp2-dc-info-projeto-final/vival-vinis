@@ -1,7 +1,10 @@
 <script lang="ts">
     import { Card, Button, Input, Label, Alert } from "flowbite-svelte";
     import { goto } from "$app/navigation";
-    import { login as authLogin } from "$lib/auth";
+    import { login as authLogin, getCurrentUser } from "$lib/auth";
+    import { onMount } from 'svelte';
+    import { UserAddOutline  } from 'flowbite-svelte-icons';
+   
     
     let login = '';
     let password = '';
@@ -33,9 +36,17 @@
       }
     }
   
-  
+    onMount(async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      goto('/login');
+    } else if (user.role !== 'admin') {
+      goto('/');
+    }
+  });
   </script>
   
+
   <svelte:head>
     <title>Login - Projeto Modelo 2025</title>
   </svelte:head>
@@ -79,6 +90,10 @@
             <Button  type="submit" color="gray" class="w-full" disabled={loading} >
               {loading ? 'Entrando...' : 'Entrar'}
             </Button>
+            <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={() => goto('/users/new')}>
+              <UserAddOutline class="w-5 h-5" />
+              Cadastrar
+            </button>
         </form>
       </Card>
     </div>

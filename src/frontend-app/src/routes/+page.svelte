@@ -1,8 +1,9 @@
 <script lang="ts">
   import { Heading } from 'flowbite-svelte';
   import Menu from '../components/Menu.svelte';
+  import { goto } from '$app/navigation';
   import {  P, ImagePlaceholder, Skeleton, TextPlaceholder } from "flowbite-svelte";
-</script>
+  </script>
 
 <Menu />
 
