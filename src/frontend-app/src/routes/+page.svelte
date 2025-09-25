@@ -70,7 +70,7 @@
                     <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline">Contact</a>
+                    <a href="#" class="hover:underline">Contato</a>
                 </li>
             </ul>
         </div>

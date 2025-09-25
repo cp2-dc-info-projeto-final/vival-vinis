@@ -44,6 +44,14 @@
       console.error('Erro no logout:', error);
     }
   }
+  onMount(async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      goto('/login');
+    } else if (user.role !== 'admin') {
+      goto('/');
+    }
+  });
 </script>
 
 <div class="text-center p-8 pt-32">
@@ -57,7 +65,11 @@
     <ArrowRightToBracketOutline class="w-4 h-4" />
       Logout
     </button>
-    
+
+    <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={() => goto('/users/new')}>
+      <UserAddOutline class="w-5 h-5" />
+      Cadastrar
+    </button>
   </div>
   <UsersTable />
 </div>
@@ -79,7 +91,7 @@
                   <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
               </li>
               <li>
-                  <a href="#" class="hover:underline">Contact</a>
+                  <a href="#" class="hover:underline">Contato</a>
               </li>
           </ul>
       </div>
