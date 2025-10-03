@@ -128,7 +128,6 @@
   <div class="block xl:hidden">
     <div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
       {#each users as user}
-        <!-- Card de usuário -->
        
       {/each}
     </div>

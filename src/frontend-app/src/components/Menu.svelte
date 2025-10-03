@@ -50,7 +50,7 @@
 </script>
 
 <div class="relative px-8">
-  <Navbar class="fixed start-0 top-0 z-20 w-full  px-2 py-2.5 sm:px-4" style="background-color: #89a194;">
+  <Navbar class="fixed start-0 top-0 z-20 w-full  px-2 py-2.5 sm:px-4" style="background-color: #3D4127;">
     <NavBrand href="/">
       <img src="/images/1000285043 (1).png" class="me-10 h-10 sm:h-10" alt="Logo aleatória" />
       <Heading class="self-center text-xl font-semibold whitespace-nowrap text-primary-500 text-primary-100">vival</Heading>
