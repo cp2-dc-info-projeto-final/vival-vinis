@@ -4,7 +4,7 @@
   import { onMount } from 'svelte'; // ciclo de vida
   import api from '$lib/api'; // API backend
   import { goto } from '$app/navigation'; // navegação
-  import { ArrowLeftOutline, FloppyDiskAltOutline } from 'flowbite-svelte-icons'; // ícones
+  import { ArrowLeftOutline, FloppyDiskAltOutline, UserAddOutline} from 'flowbite-svelte-icons'; // ícones
 
   export let id: number | null = null; // id do usuário
 
@@ -41,7 +41,7 @@
       }
     } 
   });
-
+ 
   // Submissão do formulário
   async function handleSubmit() {
     // Validação de senha
