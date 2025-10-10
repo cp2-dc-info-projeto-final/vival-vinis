@@ -70,7 +70,7 @@
     <form class="flex flex-col gap-6 p-6" on:submit|preventDefault={handleSubmit}>
       <!-- Título -->
       <Heading tag="h3" class="mb-2 text-center">
-        {id === null ? 'Cadastrar Usuário' : 'Editar Usuário'}
+        {id === null ? 'Cadastrar Produto' : 'Editar Produto'}
       </Heading>
       <!-- Mensagem de erro -->
       {#if error}

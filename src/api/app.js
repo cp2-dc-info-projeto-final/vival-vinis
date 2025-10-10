@@ -26,6 +26,8 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+const produtoRoutes = require('./routes/produto');
+app.use('/produto', produtoRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

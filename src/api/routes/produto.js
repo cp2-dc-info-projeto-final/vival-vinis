@@ -84,19 +84,17 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
 /* POST - Criar novo usuário */
 router.post('/', verifyToken, isAdmin, async function(req, res) {
   try {
-    const { login, email, senha, role = 'user' } = req.body;
-    
-    // Validação básica
-    if (!login || !email || !senha ) {
-      // http status 400 - Bad Request
-      return res.status(400).json({
-        success: false,
-        message: 'Login, email e senha são obrigatórios'
-      });
-    }
+    const { nome, descricao, preco, estoque } = req.body;
+
+if (!nome || !descricao || preco == null || estoque == null) {
+  return res.status(400).json({
+    success: false,
+    message: 'Todos os campos são obrigatórios'
+  });
+}
     
     // Verificar se o login já existe
-    const existingUser = await pool.query('SELECT id FROM usuario WHERE login = $1', [login]);
+    const existingUser = await pool.query('SELECT id FROM produto WHERE nome = $1', [nome]);
     if (existingUser.rows.length > 0) {
       return res.status(409).json({
         success: false,
@@ -105,7 +103,7 @@ router.post('/', verifyToken, isAdmin, async function(req, res) {
     }
 
     // Verificar se o email já existe
-    const existingEmail = await pool.query('SELECT id FROM usuario WHERE email = $1', [email]);
+    const existingEmail = await pool.query('SELECT id FROM produto WHERE nome = $1', [nome]);
     if (existingEmail.rows.length > 0) {
       return res.status(409).json({
         success: false,
@@ -113,22 +111,22 @@ router.post('/', verifyToken, isAdmin, async function(req, res) {
       });
     }
 
-    // Hash da senha
-    const hashedPassword = await bcrypt.hash(senha, 12);
+    // Hash da senh
 
     const result = await pool.query(
-      'INSERT INTO usuario (login, email, senha, role) VALUES ($1, $2, $3, $4) RETURNING id, login, email, role',
-      [login, email, hashedPassword, role]
+      'INSERT INTO "produto" (nome, descricao, preco, estoque) VALUES ($1, $2, $3, $4) RETURNING *',
+      [nome, descricao, preco, estoque]
     );
+    
 
     // http status 201 - Created
     res.status(201).json({
       success: true,
-      message: 'Usuário criado com sucesso',
+      message: 'Produto criado com sucesso',
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Erro ao criar usuário:', error);
+    console.error('Erro ao criar produto:', error);
     // Verificar se é erro de constraint
     if (error.code === '23514') {
       return res.status(400).json({

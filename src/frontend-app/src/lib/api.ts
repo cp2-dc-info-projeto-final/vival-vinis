@@ -1,5 +1,19 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios';
 
+
+export interface ProdutoCredentials {
+  nome: string;
+  descricao: string;
+  preco: number;
+  estoque: number;
+}
+
+export interface ProdutoResponse {
+  success: boolean;
+  token?: string;
+  message?: string;
+}
+
 // Cria uma instância global do axios para API backend na porta 3000
 const api = axios.create({
   baseURL: 'http://localhost:3000',
@@ -9,6 +23,12 @@ const api = axios.create({
     'Accept': 'application/json',
   },
 });
+
+export function setToken(token: string): void {
+  if (typeof window !== 'undefined') {
+    sessionStorage.setItem('api_token', token);
+  }
+}
 
 // Interceptor para adicionar automaticamente o token Bearer
 api.interceptors.request.use(
@@ -43,4 +63,19 @@ api.interceptors.response.use(
   }
 );
 
+export async function produto(credentials: ProdutoCredentials): Promise<ProdutoResponse> {
+  try {
+    const response = await api.post('/produto', credentials);
+    
+    if (response.data.success && response.data.token) {
+      setToken(response.data.token);
+      return { success: true, token: response.data.token };
+    }
+    
+    return { success: false, message: 'Credenciais inválidas' };
+  } catch (error) {
+    console.error('Erro no login:', error);
+    return { success: false, message: 'Credenciais inválidas' };
+  }
+}
 export default api;

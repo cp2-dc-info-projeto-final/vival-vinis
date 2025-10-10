@@ -5,8 +5,8 @@ CREATE TABLE produto (
     id bigint GENERATED ALWAYS AS IDENTITY,
     nome text NOT NULL,
     descricao text,
-    preco numeric(10,2) NOT NULL,
-    estoque integer NOT NULL DEFAULT 0,
+    preco numeric(10,2),
+    estoque integer DEFAULT 0,
    
 
     CONSTRAINT pk_produto PRIMARY KEY (id),
