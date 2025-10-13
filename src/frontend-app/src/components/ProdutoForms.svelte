@@ -78,14 +78,24 @@
       {/if}
       <!-- Campo login -->
       <div>
-        <Label for="nome">nome</Label>
+        <Label for="nome">Nome:</Label>
         <Input id="nome" bind:value={Produto.nome} placeholder="Digite o nome" required class="mt-1" />
       </div>
       <!-- Campo email -->
       <div>
-        <Label for="descricao">Descrição</Label>
+        <Label for="descricao">Descrição:</Label>
         <Input id="descricao" type="descricao" bind:value={Produto.descricao} placeholder="Digite a Descrição" required class="mt-1" />
       </div>
+      <div>
+        <Label for="preco">Preço:</Label>
+        <Input id="preco" bind:value={Produto.preco} placeholder="Digite o preço" required class="mt-1" />
+      </div>
+      <!-- Campo email -->
+      <div>
+        <Label for="estoque">Estoque:</Label>
+        <Input id="estoque" type="estoque" bind:value={Produto.estoque} placeholder="Digite o Estoque" required class="mt-1" />
+      </div>
+      
       <!-- Botões de ação -->
       <div class="flex gap-4 justify-end mt-4">
         <!-- Botão cancelar/voltar -->

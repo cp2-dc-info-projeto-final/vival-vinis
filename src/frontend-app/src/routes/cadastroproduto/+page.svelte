@@ -10,6 +10,7 @@
   import { onMount } from 'svelte';
   import {logout, getCurrentUser, getToken, type User} from '$lib/auth';
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
+	import ProdutoTable from "../../components/ProdutoTable.svelte";
     
     let nome = '';
     let descricao = '';
@@ -48,14 +49,14 @@
   
   <div class="text-center p-8 pt-32">
     <div class="flex items-center justify-between max-w-3xl mx-auto mb-6">
-      <Heading tag="h2" class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">Usuários</Heading>
+      <Heading tag="h2" class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">Produtos</Heading>
       
   
       <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={() => goto('/cadastroproduto/new')}>
         Cadastrar
       </button>
     </div>
-    <UsersTable />
+    <ProdutoTable />
   </div>
   
   
