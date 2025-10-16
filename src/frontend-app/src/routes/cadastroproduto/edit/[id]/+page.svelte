@@ -2,7 +2,7 @@
     // Importa o componente de formulário de usuário
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
-	import ProdutoForms from '../../../components/ProdutoForms.svelte';
+	import ProdutoForms from '../../../../components/ProdutoForms.svelte';
   
     // Captura o parâmetro 'id' da URL
     const { id } = get(page).params;
