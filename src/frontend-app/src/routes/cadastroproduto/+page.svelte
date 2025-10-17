@@ -35,16 +35,18 @@
         return;
       }
   
-      if (!imagem) {
+if (!imagem) {
       error = 'Por favor, selecione uma imagem';
       return;
     }
 
       loading = true;
       error = '';
+
+
   
       try {
-        const result = await authProduto({ nome, descricao, preco: Number(preco), estoque: Number(estoque) });
+        const result = await authProduto({ nome, descricao, preco: Number(preco), estoque: Number(estoque) }); //LEMBRAR DE PASSAR IMAGEM!!!!!!
         
         if (result.success) {
           goto('/');

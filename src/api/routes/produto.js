@@ -53,7 +53,7 @@ router.get('/', verifyToken, isAdmin, async function(req, res) {
   }
 });
 
-/* GET parametrizado - Buscar usuário autenticado */
+/* GET parametrizado - Buscar produto autenticado */
 router.get('/me', verifyToken, async function(req, res) {
   try {
     // parâmetro obtido do token pelo middleware
@@ -132,11 +132,12 @@ router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(r
     }
 
     // A imagem fica disponível em req.file
+    //imagemPath ESTÁ SEMPRE NULL!!!!
     let imagemPath = null;
     if (req.file) {
       imagemPath = req.file.path;  // caminho onde foi salvo o arquivo
     }
-
+  
     const result = await pool.query(
       'INSERT INTO produto (nome, descricao, preco, estoque, imagem) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [nome, descricao, preco, estoque, imagemPath]
