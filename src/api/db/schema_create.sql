@@ -22,7 +22,8 @@ INSERT INTO usuario (login, email, senha, role) VALUES
 ('hermenegildo', 'hermenegildo@email.com', '$2a$12$f2c.uHGHS4drfaz6HR870OLamkarD57kI.gkr4//Vbbp0vN9IrFfG', 'admin'),
 ('zoroastra', 'zoroastra@email.com', '$2a$12$f2c.uHGHS4drfaz6HR870OLamkarD57kI.gkr4//Vbbp0vN9IrFfG', 'user');
  
- 
+
+
 DROP TABLE IF EXISTS produto;
 
 CREATE TABLE produto (
@@ -31,7 +32,7 @@ CREATE TABLE produto (
     descricao text,
     preco numeric(10,2),
     estoque integer DEFAULT 0,
-   
+    imagem text, -- campo para armazenar o caminho da imagem
 
     CONSTRAINT pk_produto PRIMARY KEY (id),
     CONSTRAINT uk_produto_nome UNIQUE (nome),

@@ -195,7 +195,6 @@ router.post('/login', async function(req, res) {
         });
       }
 
-      // Cria o token com as informações do usuário logado e sua chave pública
       const token = jwt.sign(
         { 
           id: user.id, 
