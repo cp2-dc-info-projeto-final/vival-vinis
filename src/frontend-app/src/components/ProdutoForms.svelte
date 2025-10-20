@@ -29,7 +29,7 @@
       loading = true;
       try {
         const res = await api.get(`/produto/${id}`);
-        Produto = res.data; // atribui os dados recebidos
+        Produto = res.data.data; // atribui os dados recebidos
         console.log(Produto);
       } catch (e) {
         error = 'Erro ao carregar produto.';
@@ -39,12 +39,33 @@
     }
   });
 
-  // Função para lidar com a seleção da imagem
-  function handleImageSelect(event: Event & { target: HTMLInputElement }) {
-    if (event.target.files && event.target.files[0]) {
-      imagemFile = event.target.files[0];
-      previewUrl = URL.createObjectURL(imagemFile);
-    }
+  let mensagemErro = '';
+
+  // Manipular seleção de arquivo
+  function handleImageSelect(event: Event) {
+    console.log('cheguei aqui');
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+          imagemFile = target.files[0];
+          
+          // Validações
+          const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+          if (!allowedTypes.includes(imagemFile.type)) {
+              mensagemErro = 'Tipo de arquivo não permitido. Use JPEG, PNG, GIF ou WebP.';
+              resetImage();
+              return;
+          }
+
+          if (imagemFile.size > 5 * 1024 * 1024) {
+              mensagemErro = 'Arquivo muito grande. Tamanho máximo: 5MB';
+              resetImage();
+              return;
+          }
+
+          // Criar preview
+          previewUrl = URL.createObjectURL(imagemFile);
+          mensagemErro = '';
+      }
   }
 
   // Função para resetar a imagem
@@ -80,7 +101,7 @@
       } else {
         await api.put(`/produto/${id}`, formData);
       }
-      goto('/produto');
+      goto('/cadastroproduto');
     } catch (e: any) {
       error = e.response?.data?.message || 'Erro ao salvar produto.';
     } finally {

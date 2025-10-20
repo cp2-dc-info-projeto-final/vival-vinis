@@ -42,6 +42,9 @@
       }
   });
 
+  
+
+
   // Função para manipular a seleção de imagem
   function handleImageSelect(event: Event) {
       const target = event.target as HTMLInputElement;
@@ -160,6 +163,7 @@
       </div>
   </div>
 {/if}
+ 
 
 <!-- Modal de confirmação -->
 <ConfirmModal
