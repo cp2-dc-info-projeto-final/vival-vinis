@@ -5,6 +5,8 @@
   import { goto } from '$app/navigation';
   import api from '$lib/api'; // API backend
   import { onMount } from 'svelte'; // ciclo de vida
+  import { adicionarAoCarrinho } from '$lib/cart';
+  
 
   // Tipagem para Produto
   type Produto = {
@@ -100,6 +102,15 @@
   function handleCancel() {
       closeConfirm();
   }
+  
+  function handleAddToCart(produto: Produto) {
+  adicionarAoCarrinho({
+    id: produto.id,
+    nome: produto.nome,
+    preco: produto.preco
+  });
+  alert(`${produto.nome} foi adicionado ao carrinho!`);
+}
 
   // Função para deletar produto
   async function handleDelete(id: number) {
@@ -133,7 +144,15 @@
                           <div class="text-xs text-gray-400 text-left">ID: {produto.id}</div>
                       </div>
                       <div class="flex gap-2">
-                          <!-- Botão editar -->
+                            <!-- Botão adicionar ao carrinho -->
+                        <button
+                        title="Adicionar ao carrinho"
+                        class="p-2 rounded border border-green-200 hover:border-green-400 transition bg-transparent"
+                        on:click={() => handleAddToCart(produto)}
+                        >
+                        <ShoppingCartOutline class="w-5 h-5 text-green-500" />
+                        </button>
+                        <!-- Botão editar -->
                           <button
                               class="p-2 rounded border border-primary-200 hover:border-primary-400 transition bg-transparent"
                               title="Editar"

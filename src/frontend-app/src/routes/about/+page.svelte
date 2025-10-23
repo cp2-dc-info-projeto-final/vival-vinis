@@ -11,15 +11,10 @@
   Sobre
 </Heading>
 
-  <p class="text-center p-8"> A Vival Vinis nasceu da amizade entre quatro amigos apaixonados por música e pela magia do som analógico. Entre trocas de discos, descobertas musicais e boas conversas, surgiu a ideia de transformar esse amor em um projeto real.<br><br>
-
-
-    Criamos esta loja online para compartilhar com outras pessoas o que sempre fez parte da nossa história: o prazer de ouvir um vinil do início ao fim, com atenção, carinho e alma.<br><br>
-    
-    Aqui você encontra uma curadoria especial de vinis — dos clássicos atemporais às raridades escondidas — todos escolhidos com cuidado e respeito pela música.<br><br>
-    
-    Mais do que uma loja, a Vinil & Cia é um ponto de encontro para quem acredita que música boa merece ser sentida, não só ouvida.<br><br>
-    
+  <p class="text-center p-8"> A Vival Vinis nasceu da amizade entre quatro amigos apaixonados por música e pela magia do som analógico. Entre trocas de discos, descobertas musicais e boas conversas, surgiu a ideia de transformar esse amor em um projeto real.<br>
+    Criamos esta loja online para compartilhar com outras pessoas o que sempre fez parte da nossa história: o prazer de ouvir um vinil do início ao fim, com atenção, carinho e alma.<br>
+    Aqui você encontra uma curadoria especial de vinis — dos clássicos atemporais às raridades escondidas — todos escolhidos com cuidado e respeito pela música.<br>
+    Mais do que uma loja, a Vinil & Cia é um ponto de encontro para quem acredita que música boa merece ser sentida, não só ouvida.<br>
     🎧 Seja bem-vindo à nossa vitrola. Aumente o som e fique à vontade.</p>
 
   <h2 class="text-4xl font-extrabold dark:text-white">Conheça nossos criadores</h2>
