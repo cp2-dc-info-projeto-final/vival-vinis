@@ -123,7 +123,19 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
 /* POST - Criar novo produto */
 router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(req, res) {
   try {
-    const { nome, descricao, preco, estoque } = req.body;
+    const { nome, descricao, preco, estoque, imagem } = req.body;
+
+    if (req.file) {
+      imagemPath = `/uploads/${req.file.filename}`;
+      console.log(imagemPath);
+    }
+    else{
+      console.log("sem imagem");
+      imagemPath = ""
+    }
+
+    console.log('imagem abaixo');
+    console.log(imagem);
 
     if (!nome || !descricao || preco == null || estoque == null) {
       if (req.file) {
@@ -143,18 +155,10 @@ router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(r
         message: 'Esse nome de álbum já existe'
       });
     }
-
-    // A imagem fica disponível em req.file
-    //imagemPath ESTÁ SEMPRE NULL!!!!
-      // Gera URL da imagem se foi enviada
-      let imagem = null;
-      if (req.file) {
-        imagem = `/uploads/${req.file.filename}`;
-      }
   
     const result = await pool.query(
       'INSERT INTO produto (nome, descricao, preco, estoque, imagem) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [nome, descricao, preco, estoque, imagem]
+      [nome, descricao, preco, estoque, imagemPath]
     );
 
     res.status(201).json({
@@ -198,7 +202,7 @@ router.put('/:id', verifyToken, isAdmin, async function(req, res) {
       });
     }
     
-    let imagemPath = produtoExistente.rows[0].imagemPath;
+    let imagemPath = produtoExists.rows[0].imagemPath;
     
 
     const query = 'UPDATE produto SET nome = $1, descricao = $2, preco = $3, estoque = $4 WHERE id = $5 RETURNING id, nome, descricao, preco, estoque';

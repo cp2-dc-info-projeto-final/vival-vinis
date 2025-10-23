@@ -82,7 +82,12 @@
       const produtoData = { ...Produto };
       if (imagemFile) {
         produtoData.imagem = imagemFile; // Adiciona a imagem ao objeto de dados
+        console.log(imagemFile);
       }
+      else{
+        console.log("não tem imagem");
+      }
+     
 
       const formData = new FormData();
       formData.append('nome', produtoData.nome);
@@ -97,9 +102,17 @@
 
       // Envia os dados para a API
       if (id === null) {
-        await api.post('/produto', formData);
+        await api.post('/produto', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          });
       } else {
-        await api.put(`/produto/${id}`, formData);
+        await api.put(`/produto/${id}`, formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          });
       }
       goto('/cadastroproduto');
     } catch (e: any) {
@@ -150,7 +163,7 @@
     <!-- Campo para seleção da imagem -->
     <div>
       <Label for="imagem">Imagem:</Label>
-      <Input id="imagem" type="file" accept="image/*" on:change={handleImageSelect} class="mt-1" />
+      <input id="imagem" type="file" accept="image/*" on:change={handleImageSelect} class="mt-1" />
     </div>
 
     <!-- Exibir preview da imagem -->
