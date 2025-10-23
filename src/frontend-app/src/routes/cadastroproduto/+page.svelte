@@ -2,8 +2,8 @@
     import { Card, Button, Input, Label, Alert } from "flowbite-svelte";
     import { goto } from "$app/navigation";
     import  {produto as authProduto}  from "$lib/api";
-
     import { Heading } from 'flowbite-svelte';
+
   import UsersTable from '../../components/UsersTable.svelte';
   import { UserAddOutline  } from 'flowbite-svelte-icons';
   //import { goto } from '$app/navigation';
@@ -12,24 +12,41 @@
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
 	import ProdutoTable from "../../components/ProdutoTable.svelte";
     
-    let nome = '';
-    let descricao = '';
-    let preco = '';
-    let estoque = '';
-    let loading = false;
-    let error = '';
-  
+  let nome = '';
+  let descricao = '';
+  let preco = '';
+  let estoque = '';
+  let imagem: File | null = null;
+  let previewUrl = '';
+  let loading = false;
+  let error = '';
+
+  function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      imagem = target.files[0];
+      previewUrl = URL.createObjectURL(imagem);
+    }
+  }
+
     async function handleProduto() {
       if (!nome || !descricao || !preco || !estoque ) {
         error = 'Por favor, preencha todos os campos';
         return;
       }
   
+if (!imagem) {
+      error = 'Por favor, selecione uma imagem';
+      return;
+    }
+
       loading = true;
       error = '';
+
+
   
       try {
-        const result = await authProduto({ nome, descricao, preco: Number(preco), estoque: Number(estoque) });
+        const result = await authProduto({ nome, descricao, preco: Number(preco), estoque: Number(estoque) }); //LEMBRAR DE PASSAR IMAGEM!!!!!!
         
         if (result.success) {
           goto('/');

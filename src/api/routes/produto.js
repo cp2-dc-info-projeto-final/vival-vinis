@@ -1,11 +1,40 @@
 var express = require('express');
 var router = express.Router();
 const pool = require('../db/config');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { verifyToken, isAdmin } = require('../middlewares/auth');
+const multer = require('multer');
+const path = require('path');
 
-/* GET - Buscar todos os usuários */
+// Configuração de armazenamento
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // pasta onde será salvo
+  },
+  filename: function (req, file, cb) {
+    // Renomear o arquivo para evitar duplicações, usando timestamp + nome original
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+  }
+});
+
+// Filtro para aceitar só imagens
+function fileFilter(req, file, cb) {
+  const allowedTypes = /jpeg|jpg|png|gif/;
+  const mimetype = allowedTypes.test(file.mimetype);
+  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  if (mimetype && extname) {
+    return cb(null, true);
+  }
+  cb(new Error('Apenas arquivos de imagem são permitidos'));
+}
+
+const upload = multer({ storage, fileFilter });
+
+
+
+
+/* GET - Buscar todos os produtos */
 // requer usuário autenticado como admin
 router.get('/', verifyToken, isAdmin, async function(req, res) {
   try {
@@ -24,7 +53,7 @@ router.get('/', verifyToken, isAdmin, async function(req, res) {
   }
 });
 
-/* GET parametrizado - Buscar usuário autenticado */
+/* GET parametrizado - Buscar produto autenticado */
 router.get('/me', verifyToken, async function(req, res) {
   try {
     // parâmetro obtido do token pelo middleware
@@ -44,7 +73,7 @@ router.get('/me', verifyToken, async function(req, res) {
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Erro ao buscar usuário:', error);
+    console.error('Erro ao buscar produto:', error);
     // http status 500 - Internal Server Error
     res.status(500).json({
       success: false,
@@ -57,13 +86,13 @@ router.get('/me', verifyToken, async function(req, res) {
 router.get('/:id', verifyToken, isAdmin, async function(req, res) {
   try {
     const { id } = req.params;
-    const result = await pool.query('SELECT id, login, email, senha, role FROM usuario WHERE id = $1', [id]);
+    const result = await pool.query('SELECT id, nome, descricao, preco, estoque FROM produto WHERE id = $1', [id]);
 
     if (result.rows.length === 0) {
       // http status 404 - Not Found
       return res.status(404).json({
         success: false,
-        message: 'Usuário não encontrado'
+        message:'Produto não encontrado'
       });
     }
     
@@ -72,7 +101,7 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Erro ao buscar usuário:', error);
+    console.error('Erro ao buscar produto:', error);
     // http status 500 - Internal Server Error
     res.status(500).json({
       success: false,
@@ -81,257 +110,121 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
   }
 });
 
-/* POST - Criar novo usuário */
-router.post('/', verifyToken, isAdmin, async function(req, res) {
+/* POST - Criar novo produto */
+router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(req, res) {
   try {
     const { nome, descricao, preco, estoque } = req.body;
 
-if (!nome || !descricao || preco == null || estoque == null) {
-  return res.status(400).json({
-    success: false,
-    message: 'Todos os campos são obrigatórios'
-  });
-}
-    
-    // Verificar se o login já existe
-    const existingUser = await pool.query('SELECT id FROM produto WHERE nome = $1', [nome]);
-    if (existingUser.rows.length > 0) {
-      return res.status(409).json({
+    if (!nome || !descricao || preco == null || estoque == null) {
+      return res.status(400).json({
         success: false,
-        message: 'Login já está em uso'
+        message: 'Todos os campos são obrigatórios'
       });
     }
 
-    // Verificar se o email já existe
-    const existingEmail = await pool.query('SELECT id FROM produto WHERE nome = $1', [nome]);
-    if (existingEmail.rows.length > 0) {
+    // Verificar se já existe o nome
+    const existingAlbum = await pool.query('SELECT id FROM produto WHERE nome = $1', [nome]);
+    if (existingAlbum.rows.length > 0) {
       return res.status(409).json({
         success: false,
-        message: 'Email já está em uso'
+        message: 'Esse nome de álbum já existe'
       });
     }
 
-    // Hash da senh
-
+    // A imagem fica disponível em req.file
+    //imagemPath ESTÁ SEMPRE NULL!!!!
+    let imagemPath = null;
+    if (req.file) {
+      imagemPath = req.file.path;  // caminho onde foi salvo o arquivo
+    }
+  
     const result = await pool.query(
-      'INSERT INTO "produto" (nome, descricao, preco, estoque) VALUES ($1, $2, $3, $4) RETURNING *',
-      [nome, descricao, preco, estoque]
+      'INSERT INTO produto (nome, descricao, preco, estoque, imagem) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [nome, descricao, preco, estoque, imagemPath]
     );
-    
 
-    // http status 201 - Created
     res.status(201).json({
       success: true,
-      message: 'Produto criado com sucesso',
+      message: 'Álbum criado com sucesso',
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Erro ao criar produto:', error);
-    // Verificar se é erro de constraint
+    console.error('Erro ao criar álbum:', error);
     if (error.code === '23514') {
       return res.status(400).json({
         success: false,
         message: 'Dados inválidos. Verifique os campos e tente novamente.'
       });
     }
-    // http status 500 - Internal Server Error
     res.status(500).json({
       success: false,
       message: 'Erro interno do servidor'
     });
   }
 });
-
-
-/* POST - Autenticar usuário */
-router.post('/login', async function(req, res) {
-  try {
-    const { login, password } = req.body;
-    // obtém o usuário do banco de dados
-    const result = await pool.query(`SELECT 
-      id, login, email, senha as passwordHash, role
-      FROM usuario 
-      WHERE login = $1`, [login]);
-
-    /*
-     tratar login inválido igual senha incorreta
-     confere maior segurança por não expor indiretamente
-     se existe uma conta com aquele login 
-    */
-    if (result.rows.length === 0) {
-      // https status 401 - unauthorized
-      return res.status(401).json({
-        success: false,
-        message: 'Credenciais inválidas'
-      });
-    }
-
-    // Objeto de usuário
-    const user = result.rows[0];
-
-    /*
-     verifica a senha passando senha do forntend e hash armazenada
-     a partir da hash não se pode descobrir a senha
-     mas fornecendo a senha dá para aplicar a hash e ver coincidem
-    */
-    
-    bcrypt.compare(password, user.passwordhash, (err, isMatch) => {
-      if (err) {
-        console.error('Erro no bcrypt:', err);
-        // https status 500 - internal server error
-        return res.status(500).json({
-          success: false,
-          message: 'Erro interno do servidor'
-        });
-      }
-      
-      if (!isMatch) {
-        // https status 401 - unauthorized
-        return res.status(401).json({
-          success: false,
-          message: 'Credenciais inválidas'
-        });
-      }
-
-      // Cria o token com as informações do usuário logado e sua chave pública
-      const token = jwt.sign(
-        { 
-          id: user.id, 
-          login: user.login,
-          email: user.email,
-          senha: user.email,
-          // tipo do usuário, que vem do banco
-          role: user.role 
-          // a senha não entra no token para não ser exposta
-        }, 
-        process.env.JWT_SECRET, //chave secreta, nunca exponha!! >>> PERIGO <<<
-        { expiresIn: '1h' } 
-      );
-
-      // O token contém as informções do usuário com a chave para posterior validação
-      return res.status(200).json({
-        success: true,
-        token: token,
-        message: 'Autenticado com sucesso!'
-      });
-    });
-
-  } catch (error) {
-    console.error('Erro ao autenticar usuário:', error);
-    // http status 500 - Internal Server Error
-    res.status(500).json({
-      success: false,
-      message: 'Erro interno do servidor'
-    });
-  }
-  
-});
-
 
 /* PUT - Atualizar usuário */
 router.put('/:id', verifyToken, isAdmin, async function(req, res) {
   try {
     const { id } = req.params;
-    const { login, email, senha, role } = req.body;
-    
-    // Validação básica
-    if (!login || !email || !role) {
-      // http status 400 - Bad Request
+    const { nome, descricao, preco, estoque } = req.body;
+
+    if (!nome || !descricao || preco == null || estoque == null) {
       return res.status(400).json({
         success: false,
-        message: 'Login, email e role são obrigatórios'
-      });
-    }
-    
-    // Verificar se o usuário existe
-    const userExists = await pool.query('SELECT id FROM usuario WHERE id = $1', [id]);
-    if (userExists.rows.length === 0) {
-      // http status 404 - Not Found
-      return res.status(404).json({
-        success: false,
-        message: 'Usuário não encontrado'
-      });
-    }
-    
-    // Verificar se o login já está em uso por outro usuário
-    const existingUser = await pool.query('SELECT id FROM usuario WHERE login = $1 AND id != $2', [login, id]);
-    if (existingUser.rows.length > 0) {
-      // https status 409 - Conflict
-      return res.status(409).json({
-        success: false,
-        message: 'Login já está em uso por outro usuário'
+        message: 'Todos os campos são obrigatórios'
       });
     }
 
-    // Verificar se o email já está em uso por outro usuário
-    const existingEmail = await pool.query('SELECT id FROM usuario WHERE email = $1 AND id != $2', [email, id]);
-    if (existingEmail.rows.length > 0) {
-      return res.status(409).json({
+    const produtoExists = await pool.query('SELECT id FROM produto WHERE id = $1', [id]);
+    if (produtoExists.rows.length === 0) {
+      return res.status(404).json({
         success: false,
-        message: 'Email já está em uso por outro usuário'
+        message: 'Produto não encontrado'
       });
     }
-    
-    let query, params;
-    
-    if (senha && senha.trim() !== '') {
-      // Atualizar com nova senha
-      const hashedPassword = await bcrypt.hash(senha, 12);
-      query = 'UPDATE usuario SET login = $1, email = $2, senha = $3, role = $4 WHERE id = $5 RETURNING id, login, email, role';
-      params = [login, email, hashedPassword, role, id];
-    } else {
-      // Atualizar sem alterar senha
-      query = 'UPDATE usuario SET login = $1, email = $2, role = $3 WHERE id = $4 RETURNING id, login, email, role';
-      params = [login, email, role, id];
-    }
-    
+
+    const query = 'UPDATE produto SET nome = $1, descricao = $2, preco = $3, estoque = $4 WHERE id = $5 RETURNING id, nome, descricao, preco, estoque';
+    const params = [nome, descricao, preco, estoque, id];
+
     const result = await pool.query(query, params);
-    
+
     res.json({
       success: true,
-      message: 'Usuário atualizado com sucesso',
+      message: 'Produto atualizado com sucesso',
       data: result.rows[0]
     });
   } catch (error) {
-    console.error('Erro ao atualizar usuário:', error);
-    // Verificar se é erro de constraint
-    if (error.code === '23514') {
-      return res.status(400).json({
-        success: false,
-        message: 'Dados inválidos. Verifique os campos e tente novamente.'
-      });
-    }
-    // http status 500 - Internal Server Error
+    console.error('Erro ao atualizar produto:', error);
     res.status(500).json({
       success: false,
       message: 'Erro interno do servidor'
     });
   }
 });
-
 /* DELETE - Remover usuário */
 router.delete('/:id', verifyToken, isAdmin, async function(req, res) {
   try {
     const { id } = req.params;
     
     // Verificar se o usuário existe
-    const userExists = await pool.query('SELECT id FROM usuario WHERE id = $1', [id]);
+    const userExists = await pool.query('SELECT id FROM produto WHERE id = $1', [id]);
     if (userExists.rows.length === 0) {
       // http status 404 - Not Found
       return res.status(404).json({
         success: false,
-        message: 'Usuário não encontrado'
+        message: 'Produto não encontrado'
       });
     }
     
-    await pool.query('DELETE FROM usuario WHERE id = $1', [id]);
+    await pool.query('DELETE FROM produto WHERE id = $1', [id]);
     
     res.json({
       success: true,
-      message: 'Usuário deletado com sucesso'
+      message: 'Produto deletado com sucesso'
     });
   } catch (error) {
-    console.error('Erro ao deletar usuário:', error);
+    console.error('Erro ao deletar produto:', error);
     // http status 500 - Internal Server Error
     res.status(500).json({
       success: false,
