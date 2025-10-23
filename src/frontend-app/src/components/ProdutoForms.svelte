@@ -29,7 +29,7 @@
       loading = true;
       try {
         const res = await api.get(`/produto/${id}`);
-        Produto = res.data; // atribui os dados recebidos
+        Produto = res.data.data; // atribui os dados recebidos
         console.log(Produto);
       } catch (e) {
         error = 'Erro ao carregar produto.';
@@ -39,12 +39,33 @@
     }
   });
 
-  // Função para lidar com a seleção da imagem
-  function handleImageSelect(event: Event & { target: HTMLInputElement }) {
-    if (event.target.files && event.target.files[0]) {
-      imagemFile = event.target.files[0];
-      previewUrl = URL.createObjectURL(imagemFile);
-    }
+  let mensagemErro = '';
+
+  // Manipular seleção de arquivo
+  function handleImageSelect(event: Event) {
+    console.log('cheguei aqui');
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+          imagemFile = target.files[0];
+          
+          // Validações
+          const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+          if (!allowedTypes.includes(imagemFile.type)) {
+              mensagemErro = 'Tipo de arquivo não permitido. Use JPEG, PNG, GIF ou WebP.';
+              resetImage();
+              return;
+          }
+
+          if (imagemFile.size > 5 * 1024 * 1024) {
+              mensagemErro = 'Arquivo muito grande. Tamanho máximo: 5MB';
+              resetImage();
+              return;
+          }
+
+          // Criar preview
+          previewUrl = URL.createObjectURL(imagemFile);
+          mensagemErro = '';
+      }
   }
 
   // Função para resetar a imagem
@@ -61,7 +82,12 @@
       const produtoData = { ...Produto };
       if (imagemFile) {
         produtoData.imagem = imagemFile; // Adiciona a imagem ao objeto de dados
+        console.log(imagemFile);
       }
+      else{
+        console.log("não tem imagem");
+      }
+     
 
       const formData = new FormData();
       formData.append('nome', produtoData.nome);
@@ -76,11 +102,19 @@
 
       // Envia os dados para a API
       if (id === null) {
-        await api.post('/produto', formData);
+        await api.post('/produto', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          });
       } else {
-        await api.put(`/produto/${id}`, formData);
+        await api.put(`/produto/${id}`, formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          });
       }
-      goto('/produto');
+      goto('/cadastroproduto');
     } catch (e: any) {
       error = e.response?.data?.message || 'Erro ao salvar produto.';
     } finally {
@@ -129,7 +163,7 @@
     <!-- Campo para seleção da imagem -->
     <div>
       <Label for="imagem">Imagem:</Label>
-      <Input id="imagem" type="file" accept="image/*" on:change={handleImageSelect} class="mt-1" />
+      <input id="imagem" type="file" accept="image/*" on:change={handleImageSelect} class="mt-1" />
     </div>
 
     <!-- Exibir preview da imagem -->

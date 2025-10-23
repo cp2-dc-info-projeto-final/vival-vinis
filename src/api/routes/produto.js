@@ -4,32 +4,42 @@ const pool = require('../db/config');
 const { verifyToken, isAdmin } = require('../middlewares/auth');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
-// Configuração de armazenamento
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // pasta onde será salvo
-  },
-  filename: function (req, file, cb) {
-    // Renomear o arquivo para evitar duplicações, usando timestamp + nome original
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+
+// Configuração do Multer para upload de imagens
+  const uploadsDir = path.join(__dirname, '../uploads');
+
+  // Garante que a pasta uploads existe
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
   }
-});
 
-// Filtro para aceitar só imagens
-function fileFilter(req, file, cb) {
-  const allowedTypes = /jpeg|jpg|png|gif/;
-  const mimetype = allowedTypes.test(file.mimetype);
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  if (mimetype && extname) {
-    return cb(null, true);
-  }
-  cb(new Error('Apenas arquivos de imagem são permitidos'));
-}
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadsDir);
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, 'produto-' + uniqueSuffix + path.extname(file.originalname));
+    }
+  });
 
-const upload = multer({ storage, fileFilter });
+  const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = /jpeg|jpg|png|gif|webp/;
+      const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+      const mimetype = allowedTypes.test(file.mimetype);
+
+      if (mimetype && extname) {
+        cb(null, true);
+      } else {
+        cb(new Error('Apenas imagens são permitidas (JPEG, PNG, GIF, WebP)'));
+      }
+    }
+  });
 
 
 
@@ -54,7 +64,7 @@ router.get('/', verifyToken, isAdmin, async function(req, res) {
 });
 
 /* GET parametrizado - Buscar produto autenticado */
-router.get('/me', verifyToken, async function(req, res) {
+router.get('/me', verifyToken, async function(req, res, ) {
   try {
     // parâmetro obtido do token pelo middleware
     const id = req.user.id;
@@ -113,9 +123,24 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
 /* POST - Criar novo produto */
 router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(req, res) {
   try {
-    const { nome, descricao, preco, estoque } = req.body;
+    const { nome, descricao, preco, estoque, imagem } = req.body;
+
+    if (req.file) {
+      imagemPath = `/uploads/${req.file.filename}`;
+      console.log(imagemPath);
+    }
+    else{
+      console.log("sem imagem");
+      imagemPath = ""
+    }
+
+    console.log('imagem abaixo');
+    console.log(imagem);
 
     if (!nome || !descricao || preco == null || estoque == null) {
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
       return res.status(400).json({
         success: false,
         message: 'Todos os campos são obrigatórios'
@@ -129,13 +154,6 @@ router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(r
         success: false,
         message: 'Esse nome de álbum já existe'
       });
-    }
-
-    // A imagem fica disponível em req.file
-    //imagemPath ESTÁ SEMPRE NULL!!!!
-    let imagemPath = null;
-    if (req.file) {
-      imagemPath = req.file.path;  // caminho onde foi salvo o arquivo
     }
   
     const result = await pool.query(
@@ -183,6 +201,9 @@ router.put('/:id', verifyToken, isAdmin, async function(req, res) {
         message: 'Produto não encontrado'
       });
     }
+    
+    let imagemPath = produtoExists.rows[0].imagemPath;
+    
 
     const query = 'UPDATE produto SET nome = $1, descricao = $2, preco = $3, estoque = $4 WHERE id = $5 RETURNING id, nome, descricao, preco, estoque';
     const params = [nome, descricao, preco, estoque, id];
