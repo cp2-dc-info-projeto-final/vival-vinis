@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { getCarrinho, removerDoCarrinho, limparCarrinho, type ProdutoCarrinho } from '$lib/cart';
+  import { getCarrinho, removerDoCarrinho, limparCarrinho, type ProdutoCarrinho } from '$lib/stores/cart';
   import { TrashBinOutline } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
 

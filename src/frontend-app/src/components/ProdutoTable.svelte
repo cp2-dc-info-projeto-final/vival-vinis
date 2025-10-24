@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import api from '$lib/api'; // API backend
   import { onMount } from 'svelte'; // ciclo de vida
-  import { adicionarAoCarrinho } from '$lib/cart';
+  import { adicionarAoCarrinho } from '$lib/stores/cart';
   
 
   // Tipagem para Produto
