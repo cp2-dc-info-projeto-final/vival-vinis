@@ -40,3 +40,13 @@ CREATE TABLE produto (
     CONSTRAINT ck_produto_preco_positive CHECK (preco >= 0),
     CONSTRAINT ck_produto_estoque_non_negative CHECK (estoque >= 0)
 );
+
+ CREATE TABLE carrinho (
+  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  produto_id bigint NOT NULL,
+  quantidade INT NOT NULL DEFAULT 1,
+ 
+  CONSTRAINT fk_produto
+    FOREIGN KEY(produto_id) REFERENCES produtos(id)
+    ON DELETE CASCADE
+);
