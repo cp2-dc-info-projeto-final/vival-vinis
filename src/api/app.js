@@ -11,6 +11,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 // CORS para liberar requests do frontend via nginx
 app.use(cors({
   origin: ['http://localhost', 'http://127.0.0.1', 'http://localhost:80', 'http://127.0.0.1:80', 'http://localhost:5173', 'http://127.0.0.1:5173'],

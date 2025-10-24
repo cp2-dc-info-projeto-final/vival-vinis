@@ -15,6 +15,7 @@
       descricao: string;
       preco: number;
       estoque: number;
+      imagem: string;
   };
 
   // Variáveis principais
@@ -173,7 +174,9 @@
                               <TrashBinOutline class="w-5 h-5 text-red-400" />
                           </button>
                       </div>
+
                   </div>
+                  <img src={`http://localhost:3000${produto.imagem}`} alt={produto.nome} class="w-full h-48 object-cover" />
                   <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
                       <div class="flex items-center gap-2 text-left"></div>
                   </div>
