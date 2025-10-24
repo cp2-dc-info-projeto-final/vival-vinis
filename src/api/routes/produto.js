@@ -48,7 +48,7 @@ const fs = require('fs');
 // requer usuário autenticado como admin
 router.get('/', verifyToken, isAdmin, async function(req, res) {
   try {
-    const result = await pool.query('SELECT id, nome, descricao, preco, estoque FROM produto ORDER BY id');
+    const result = await pool.query('SELECT id, nome, descricao, preco, estoque, imagem FROM produto ORDER BY id');
     res.json({
       success: true,
       data: result.rows
