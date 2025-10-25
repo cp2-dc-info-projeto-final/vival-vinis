@@ -5,6 +5,7 @@
   import api from '$lib/api'; // API backend
   import { goto } from '$app/navigation'; // navegação
   import { ArrowLeftOutline, FloppyDiskAltOutline } from 'flowbite-svelte-icons'; // ícones
+  import { logout, getCurrentUser, getToken, type User } from "$lib/auth";
   
   export let id: number | null = null; // id do produto
   
@@ -123,8 +124,9 @@
   }
 
   function handleCancel() {
-    goto('/produto');
+    goto('/');
   }
+  
 </script>
 
 <!-- Card do formulário -->
@@ -185,7 +187,7 @@
       <Button type="submit" color="light" disabled={loading}>
         <FloppyDiskAltOutline class="inline w-5 h-5 mr-2 align-text-bottom" />
         {id === null ? 'Cadastrar' : 'Salvar'}
-      </Button>
+      </Button>      
     </div>
   </form>
 </Card>

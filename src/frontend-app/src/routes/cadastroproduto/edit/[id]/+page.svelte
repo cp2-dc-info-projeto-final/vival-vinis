@@ -6,6 +6,28 @@
     import Menu from '../../../../components/Menu.svelte';
     // Captura o parâmetro 'id' da URL
     const { id } = get(page).params;
+    import { onMount } from 'svelte';
+    import { getCarrinho, removerDoCarrinho, limparCarrinho, type ProdutoCarrinho } from '$lib/stores/cart';
+
+    let carrinho: ProdutoCarrinho[] = [];
+
+onMount(() => {
+  carrinho = getCarrinho();
+});
+
+function removerItem(id: number) {
+  removerDoCarrinho(id);
+  carrinho = getCarrinho();
+}
+
+function limpar() {
+  limparCarrinho();
+  carrinho = [];
+}
+
+function total() {
+  return carrinho.reduce((soma, p) => soma + p.preco * p.quantidade, 0).toFixed(2);
+}
 </script>
 
   <!-- Utiliza o componente UserForm passando id -->

@@ -1,12 +1,13 @@
 <script lang="ts">
   import { Table, TableHead, TableHeadCell, TableBody, TableBodyRow, TableBodyCell, Card, Badge } from 'flowbite-svelte';
   import ConfirmModal from './ConfirmModal.svelte';
-  import { UserEditOutline, TrashBinOutline } from 'flowbite-svelte-icons';
+  import { UserEditOutline, TrashBinOutline, ShoppingBagOutline } from 'flowbite-svelte-icons';
   import { goto } from '$app/navigation';
   import api from '$lib/api'; // API backend
   import { onMount } from 'svelte'; // ciclo de vida
-  import { adicionarAoCarrinho } from '$lib/stores/cart';
-  
+  import { carrinho } from '$lib/stores/cart';
+  import { adicionarAoCarrinho } from '$lib/stores/cart'
+ 
 
   // Tipagem para Produto
   type Produto = {
@@ -142,7 +143,12 @@
       <div class="flex flex-col items-center gap-4 my-8 max-w-3xl mx-auto md:grid md:grid-cols-2">
           {#each produtos as produto}
               <Card class="max-w-sm w-full p-0 overflow-hidden shadow-lg border border-gray-200">
-                  <div class="px-4 pt-4 pb-2 bg-gray-100 text-left flex items-center justify-between">
+                <img src={`http://localhost:3000${produto.imagem}`} alt={produto.nome} class="w-full h-48 object-cover" />
+                <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
+                    <div class="flex items-center gap-2 text-left"></div>
+                </div>
+                
+                <div class="px-4 pt-4 pb-2 bg-gray-100 text-left flex items-center justify-between">
                       <div>
                           <div class="text-lg font-semibold text-gray-800 text-left">{produto.nome}</div>
                           <div class="text-xs text-gray-400 text-left">ID: {produto.id}</div>
@@ -154,7 +160,7 @@
                         class="p-2 rounded border border-green-200 hover:border-green-400 transition bg-transparent"
                         on:click={() => handleAddToCart(produto)}
                         >
-                        <ShoppingCartOutline class="w-5 h-5 text-green-500" />
+                        <ShoppingBagOutline class="w-5 h-5 text-green-500" />
                         </button>
                         <!-- Botão editar -->
                           <button
@@ -176,10 +182,7 @@
                       </div>
 
                   </div>
-                  <img src={`http://localhost:3000${produto.imagem}`} alt={produto.nome} class="w-full h-48 object-cover" />
-                  <div class="px-4 pb-4 pt-2 flex flex-col gap-2 text-left">
-                      <div class="flex items-center gap-2 text-left"></div>
-                  </div>
+                
               </Card>
           {/each}
       </div>

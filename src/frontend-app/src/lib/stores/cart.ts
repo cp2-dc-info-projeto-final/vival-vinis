@@ -1,49 +1,50 @@
-// src/lib/cart.ts
+// $lib/stores/cart.ts
+import { writable } from 'svelte/store';
 
 export type ProdutoCarrinho = {
-    id: number;
-    nome: string;
-    preco: number;
-    quantidade: number;
-  };
-  
-  // Chave de armazenamento
-  const STORAGE_KEY = 'carrinho';
-  
-  // Obter o carrinho
-  export function getCarrinho(): ProdutoCarrinho[] {
-    if (typeof sessionStorage === 'undefined') return [];
-    const data = sessionStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  }
-  
-  // Salvar o carrinho
-  function salvarCarrinho(carrinho: ProdutoCarrinho[]) {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(carrinho));
-  }
-  
-  // Adicionar produto
-  export function adicionarAoCarrinho(produto: Omit<ProdutoCarrinho, 'quantidade'>) {
-    const carrinho = getCarrinho();
-    const existente = carrinho.find((p) => p.id === produto.id);
-  
-    if (existente) {
-      existente.quantidade += 1;
-    } else {
-      carrinho.push({ ...produto, quantidade: 1 });
+  id: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+};
+
+// Inicializa carrinho a partir do sessionStorage
+function createCarrinho() {
+  const stored = sessionStorage.getItem('carrinho');
+  const initial: ProdutoCarrinho[] = stored ? JSON.parse(stored) : [];
+  const { subscribe, set, update } = writable(initial);
+
+  // Atualiza sessionStorage sempre que o store mudar
+  subscribe((value) => {
+    sessionStorage.setItem('carrinho', JSON.stringify(value));
+  });
+
+  return {
+    subscribe,
+    adicionar: (produto: Omit<ProdutoCarrinho, 'quantidade'>) =>
+      update((items) => {
+        const index = items.findIndex((p) => p.id === produto.id);
+        if (index > -1) {
+          items[index].quantidade += 1;
+        } else {
+          items.push({ ...produto, quantidade: 1 });
+        }
+        return items;
+      }),
+    remover: (id: number) =>
+      update((items) => items.filter((p) => p.id !== id)),
+    limpar: () => set([]),
+    getCarrinho: () => {
+      const carrinhoString = sessionStorage.getItem('carrinho');
+      return carrinhoString ? JSON.parse(carrinhoString) : [];
     }
-  
-    salvarCarrinho(carrinho);
-  }
-  
-  // Remover produto
-  export function removerDoCarrinho(id: number) {
-    const carrinho = getCarrinho().filter((p) => p.id !== id);
-    salvarCarrinho(carrinho);
-  }
-  
-  // Limpar tudo
-  export function limparCarrinho() {
-    sessionStorage.removeItem(STORAGE_KEY);
-  }
-  
+  };
+}
+
+export const carrinho = createCarrinho();
+
+// Funções para a página do carrinho
+export const adicionarAoCarrinho = carrinho.adicionar;
+export const removerDoCarrinho = carrinho.remover;
+export const limparCarrinho = carrinho.limpar;
+export const getCarrinho = carrinho.getCarrinho;
