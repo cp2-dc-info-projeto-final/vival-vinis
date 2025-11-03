@@ -1,100 +1,104 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { getCarrinho, removerDoCarrinho, limparCarrinho, type ProdutoCarrinho } from '$lib/stores/cart';
-  import { TrashBinOutline } from 'flowbite-svelte-icons';
+  import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/cart';
   import { goto } from '$app/navigation';
 
-  let carrinho: ProdutoCarrinho[] = [];
+  // variável reativa para o total (totalPrice é um derived store)
+  $: total = $totalPrice;
 
-  onMount(() => {
-    carrinho = getCarrinho();
-  });
-
-  function removerItem(id: number) {
-    removerDoCarrinho(id);
-    carrinho = getCarrinho();
-  }
-
-  function limpar() {
+  function finalizarCompra() {
+    alert('Compra finalizada com sucesso! Total: R$ ' + total.toFixed(2));
     limparCarrinho();
-    carrinho = [];
-  }
-
-  function total() {
-    return carrinho.reduce((soma, p) => soma + p.preco * p.quantidade, 0).toFixed(2);
+    goto('/');
   }
 </script>
 
-<h1 class="text-2xl  items-center font-semibold mb-4">🛍️ Carrinho de Compras</h1>
+<svelte:head>
+  <title>Carrinho de Compras</title>
+</svelte:head>
 
-{#if carrinho.length === 0}
-  <p class="text-gray-500 mb-4">Seu carrinho está vazio.</p>
-  <button on:click={() => goto('/')} class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition">
-    Voltar às compras
-  </button>
-{:else}
-  <table class="w-full border-collapse border border-gray-300 mb-4">
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="border border-gray-300 px-3 py-2 text-left">Produto</th>
-        <th class="border border-gray-300 px-3 py-2">Preço</th>
-        <th class="border border-gray-300 px-3 py-2">Qtd</th>
-        <th class="border border-gray-300 px-3 py-2">Subtotal</th>
-        <th class="border border-gray-300 px-3 py-2">Ação</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each carrinho as item}
-        <tr>
-          <td class="border border-gray-300 px-3 py-2">{item.nome}</td>
-          <td class="border border-gray-300 px-3 py-2">R$ {item.preco.toFixed(2)}</td>
-          <td class="border border-gray-300 px-3 py-2 text-center">{item.quantidade}</td>
-          <td class="border border-gray-300 px-3 py-2">R$ {(item.preco * item.quantidade).toFixed(2)}</td>
-          <td class="border border-gray-300 px-3 py-2 text-center">
-            <button
-              class="p-1 rounded border border-red-300 hover:bg-red-100"
-              on:click={() => removerItem(item.id)}
-            >
-              <TrashBinOutline class="w-4 h-4 text-red-500" />
-            </button>
-          </td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+  <h1 class="text-2xl font-bold text-center mb-6">𝐌𝐞𝐮 𝐜𝐚𝐫𝐫𝐢𝐧𝐡𝐨 🛒 </h1>
 
-  <div class="flex justify-between items-center">
-    <div class="font-semibold text-lg">Total: R$ {total()}</div>
-    <div class="flex gap-2">
-      <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={limpar}>
-        Limpar Carrinho
-      </button>
-      <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition">
-        Finalizar Compra
+  {#if $carrinho.length === 0}
+    <div class="text-center py-12">
+      <p class="text-red-600 text-lg mb-4">Seu carrinho está vazio</p>
+      <button 
+        on:click={() => goto('/consultaplanta')} 
+        class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors"
+      >
+        Continuar Comprando
       </button>
     </div>
-  </div>
-{/if}
-<footer class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
-    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-            <a href="" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                <img src="/images/1000285043 (1).png" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">vival</span>
-            </a>
-            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                <li>
-                    <a href="/about" class="hover:underline me-4 md:me-6">Sobre</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-                </li>
-                <li>
-                    <a href="#" class="hover:underline">Contact</a>
-                </li>
-            </ul>
+  {:else}
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="p-6">
+        {#each $carrinho as item (item.id)}
+          <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-b-0">
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg">{item.nome_produto}</h3>
+              <p class="text-gray-600 text-sm">{item.descricao}</p>
+              <p class="text-green-600 font-semibold mt-1">
+                R$ {String(item.preco).replace('.', ',')}
+              </p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+              <div class="flex items-center gap-2">
+                <button
+                  on:click={() => atualizarQuantidade(item.id, item.quantidade - 1)}
+                  class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                >
+                  −
+                </button>
+                <span class="w-8 text-center font-semibold">{item.quantidade}</span>
+                <button
+                  on:click={() => atualizarQuantidade(item.id, item.quantidade + 1)}
+                  class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                >
+                  +
+                </button>
+              </div>
+              
+              <button
+                on:click={() => removerDoCarrinho(item.id)}
+                class="text-red-500 hover:text-red-700 p-2 transition-colors"
+                title="Remover item"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        {/each}
+      </div>
+      
+      <div class="bg-gray-50 px-6 py-4">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-lg font-semibold">Total:</span>
+          <span class="text-xl font-bold text-green-500">R$ {total.toFixed(2).replace('.', ',')}</span>
         </div>
-        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">Vival</a>. All Rights Reserved.</span>
+        
+        <div class="flex gap-3">
+          <button
+            on:click={limparCarrinho}
+            class="flex-1 bg-pink-400 hover:bg-pink-700 text-white py-3 px-4 rounded-lg transition-colors"
+          >
+            Limpar Carrinho
+          </button>
+          <button
+            on:click={finalizarCompra}
+            class="flex-1 bg-green-500 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors"
+          >
+            Finalizar Compra
+          </button>
+        </div>
+        
+        <button 
+          on:click={() => goto('/consultaplanta')} 
+          class="w-full mt-3 text-pink-400 hover:text-pink-700 py-2 transition-colors"
+        >
+          ← Continuar Comprando
+        </button>
+      </div>
     </div>
-  </footer>
+  {/if}
+</div>

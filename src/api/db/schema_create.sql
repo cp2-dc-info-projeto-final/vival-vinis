@@ -47,6 +47,6 @@ CREATE TABLE produto (
   quantidade INT NOT NULL DEFAULT 1,
  
   CONSTRAINT fk_produto
-    FOREIGN KEY(produto_id) REFERENCES produtos(id)
+    FOREIGN KEY(produto_id) REFERENCES produto(id)
     ON DELETE CASCADE
 );
