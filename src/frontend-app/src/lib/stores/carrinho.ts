@@ -1,15 +1,16 @@
 import { writable, derived, type Writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import { currentUser } from '../stores/auth'; // ajuste se o seu store de auth tiver outro path / shape
+import { currentUser } from '$lib/stores/auth'; // ajuste se o seu store de auth tiver outro path / shape
 
-export interface ItemCarrinho {
+export type ItemCarrinho = {
   id: number;
   nome_produto: string;
   descricao: string;
-  preco: string; // mantive string por compatibilidade; tratamos na soma
-  quantidade: number;
-  imagem?: string;
-}
+  preco: number; // ✅ troque string -> number
+  estoque: number;
+  imagem: string;
+};
+
 
 function storageKeyFor(user: any) {
   if (user && (user.id || user.uid || user.email)) {
@@ -74,7 +75,7 @@ export function adicionarAoCarrinho(produto: Omit<ItemCarrinho, 'quantidade'>) {
     const itemExistente = items.find(item => item.id === produto.id);
     if (itemExistente) {
       return items.map(item =>
-        item.id === produto.id ? { ...item, quantidade: item.quantidade + 1 } : item
+        item.id === produto.id ? { ...item, quantidade: item.estoque + 1 } : item
       );
     } else {
       return [...items, { ...produto, quantidade: 1 }];
@@ -100,13 +101,13 @@ export function limparCarrinho() {
 
 // Stores derivadas reativas
 export const totalItems = derived(internal, $items =>
-  $items.reduce((sum, item) => sum + (item.quantidade || 0), 0)
+  $items.reduce((sum, item) => sum + (item.estoque || 0), 0)
 );
 
 export const totalPrice = derived(internal, $items =>
   $items.reduce((sum, item) => {
     const precoNum = parseFloat(String(item.preco).replace(',', '.')) || 0;
-    return sum + precoNum * (item.quantidade || 0);
+    return sum + precoNum * (item.estoque || 0);
   }, 0)
 );
 

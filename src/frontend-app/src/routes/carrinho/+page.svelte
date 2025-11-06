@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/cart';
+  import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/carrinho';
   import { goto } from '$app/navigation';
 
   // variável reativa para o total (totalPrice é um derived store)
@@ -23,7 +23,7 @@
     <div class="text-center py-12">
       <p class="text-red-600 text-lg mb-4">Seu carrinho está vazio</p>
       <button 
-        on:click={() => goto('/consultaplanta')} 
+        on:click={() => goto('/')} 
         class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors"
       >
         Continuar Comprando
@@ -45,14 +45,14 @@
             <div class="flex items-center gap-4">
               <div class="flex items-center gap-2">
                 <button
-                  on:click={() => atualizarQuantidade(item.id, item.quantidade - 1)}
+                  on:click={() => atualizarQuantidade(item.id, item.estoque - 1)}
                   class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 >
                   −
                 </button>
-                <span class="w-8 text-center font-semibold">{item.quantidade}</span>
+                <span class="w-8 text-center font-semibold">{item.estoque}</span>
                 <button
-                  on:click={() => atualizarQuantidade(item.id, item.quantidade + 1)}
+                  on:click={() => atualizarQuantidade(item.id, item.estoque + 1)}
                   class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 >
                   +
@@ -93,7 +93,7 @@
         </div>
         
         <button 
-          on:click={() => goto('/consultaplanta')} 
+          on:click={() => goto('/')} 
           class="w-full mt-3 text-pink-400 hover:text-pink-700 py-2 transition-colors"
         >
           ← Continuar Comprando

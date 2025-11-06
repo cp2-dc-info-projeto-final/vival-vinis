@@ -7,32 +7,11 @@
     // Captura o parâmetro 'id' da URL
     const { id } = get(page).params;
     import { onMount } from 'svelte';
-    import { getCarrinho, removerDoCarrinho, limparCarrinho, type ProdutoCarrinho } from '$lib/stores/cart';
-
-    let carrinho: ProdutoCarrinho[] = [];
-
-onMount(() => {
-  carrinho = getCarrinho();
-});
-
-function removerItem(id: number) {
-  removerDoCarrinho(id);
-  carrinho = getCarrinho();
-}
-
-function limpar() {
-  limparCarrinho();
-  carrinho = [];
-}
-
-function total() {
-  return carrinho.reduce((soma, p) => soma + p.preco * p.quantidade, 0).toFixed(2);
-}
-</script>
+   
+    </script>
 
   <!-- Utiliza o componente UserForm passando id -->
   <ProdutoForms id={Number(id)} />
-  
   
   
   <footer class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
@@ -58,4 +37,3 @@ function total() {
         <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="" class="hover:underline">Vival</a>. All Rights Reserved.</span>
     </div>
   </footer>
-  
