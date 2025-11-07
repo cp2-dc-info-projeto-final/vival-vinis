@@ -6,8 +6,8 @@
   import { ArrowRightToBracketOutline } from "flowbite-svelte-icons";
   import { page } from "$app/stores";
   
-  let user: User | null = null;
-  let hasToken = false;
+  let user: User | null = $page.data.user;
+  let hasToken = !!user;
 
   // Verifica token sincronamente (instantâneo)
   function updateAuthStatus() {

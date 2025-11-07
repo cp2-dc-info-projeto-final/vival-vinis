@@ -13,16 +13,10 @@
     login: string;
     email: string;
     senha?: string;
-    role: string;
   };
 
-  let user: User = { id: 0, login: '', email: '', senha: '', role: 'user' }; // dados do form
+  let user: User = { id: 0, login: '', email: '', senha: ''}; // dados do form
   
-  // Opções de roles
-  const roleOptions = [
-    { value: 'user', name: 'Usuário' },
-    { value: 'admin', name: 'Administrador' }
-  ];
   let loading = false;
   let error = '';
 
@@ -117,11 +111,6 @@
         minlength={6}
         class="mt-1" 
       />
-    </div>
-    <!-- Campo role -->
-    <div>
-      <Label for="role">Perfil</Label>
-      <Select id="role" bind:value={user.role} items={roleOptions} class="mt-1" />
     </div>
     <!-- Botões de ação -->
     <div class="flex gap-4 justify-end mt-4">

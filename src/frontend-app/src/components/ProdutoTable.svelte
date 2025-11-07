@@ -24,7 +24,7 @@
   let loading = false;
 
   let user: User | null = null;
-  let hasToken = false;
+  //let hasToken = false;
 
   let produtoAdicionado: number | null = null;
 
@@ -81,17 +81,17 @@
       loading = false;
     }
   }
-
-  if (hasToken && !user) {
+  
+  if (/*hasToken && */!user) {
       getCurrentUser().then(userData => {
         user = userData;
       }).catch(() => {
         user = null;
-        hasToken = false;
+        //hasToken = false;
       });
-    } else if (!hasToken) {
+    } /*else if (!hasToken) {
       user = null;
-    }
+    }*/
   async function buscarProdutosPorNome(nome: string) {
     erro = '';
     loading = true;
@@ -193,7 +193,7 @@
           {/if}
         </button>
       </div>
-
+      
       {#if user?.role === 'admin'}
         <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
           <button
