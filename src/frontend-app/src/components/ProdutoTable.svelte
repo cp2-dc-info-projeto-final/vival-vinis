@@ -4,6 +4,7 @@
   import { onMount } from 'svelte'; // ciclo de vida
   import { adicionarAoCarrinho } from '$lib/stores/carrinho'
   import {getToken, getCurrentUser, type User} from '$lib/auth';
+  import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
  
   const baseURL = api.defaults.baseURL;
 
@@ -107,13 +108,9 @@
   }
 
   async function removerProduto(id: number) {
-    if (!confirm('Tem certeza que deseja remover este produto?')) {
-      return;
-    }
-
     erro = '';
     try {
-      await api.delete(`/produtos/${id}`);
+      await api.delete(`/produto/${id}`);
       if (search.length >= 3) {
         buscarProdutosPorNome(search);
       } else {
@@ -123,7 +120,32 @@
       erro = e.response?.data?.message || 'Erro ao remover produto';
     }
   }
+    
+  let produto: Produto[] = []; // lista de usuários
+  let loading = true;
+  let error = '';
+  let deletingId: number | null = null; // id em deleção
+  let confirmOpen = false; // modal aberto?
+  let confirmTargetId: number | null = null; // id alvo do modal
 
+  // Abre modal de confirmação
+  function openConfirm(id: number) {
+    confirmTargetId = id;
+    confirmOpen = true;
+  }
+  // Fecha modal
+  function closeConfirm() {
+    confirmOpen = false;
+    confirmTargetId = null;
+  }
+
+    closeConfirm();
+
+  // Cancela remoção
+  function handleCancel() {
+    closeConfirm();
+  }
+  
   onMount(async () => {
     await buscarUsuarioLogado();
     await buscarProdutos();
@@ -187,7 +209,7 @@
           disabled={produtoAdicionado === produto.id}
         >
           {#if produtoAdicionado === produto.id}
-            <span>✓ Adicionado!</span>
+            <span> Adicionado!</span>
           {:else}
             <span>🛒 Adicionar ao Carrinho</span>
           {/if}
@@ -197,8 +219,8 @@
       {#if user?.role === 'admin'}
         <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
           <button
-            class="bg-green-400 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full transition-colors"
-            on:click={() => goto(`/editarprodutos?id=${produto.id}`)}
+            class="bg-green-600 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full transition-colors"
+            on:click={() => goto(`/cadastroproduto/edit/${produto.id}`)}
           >
             Editar
           </button>

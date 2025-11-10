@@ -37,7 +37,7 @@ type Produto = {
   let mensagemErro: string = ''; // Mensagem de erro para upload
 
   
-     
+
   let user: User | null = null;
   let hasToken = false;
 
