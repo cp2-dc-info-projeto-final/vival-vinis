@@ -182,33 +182,50 @@ router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(r
 });
 
 /* PUT - Atualizar usuário */
-router.put('/:id', verifyToken, isAdmin, async function(req, res) {
+router.put('/:id', verifyToken, isAdmin,  upload.single('imagem'), async function(req, res) {
   try {
     const { id } = req.params;
-    const { nome, descricao, preco, estoque } = req.body;
+    const { nome, descricao, preco, estoque, imagem} = req.body;
+
+    console.log("Aqui: ", req.body);
+
+    if (req.file) {
+      imagemPath = `/uploads/${req.file.filename}`;
+      console.log(imagemPath);
+    }
+    else{
+      console.log("sem imagem");
+      imagemPath = "";
+    }
 
     if (!nome || !descricao || preco == null || estoque == null) {
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
       return res.status(400).json({
         success: false,
         message: 'Todos os campos são obrigatórios'
       });
     }
 
-    const produtoExists = await pool.query('SELECT id FROM produto WHERE id = $1', [id]);
+    const produtoExists = await pool.query('SELECT id, imagem FROM produto WHERE id = $1', [id]);
     if (produtoExists.rows.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Produto não encontrado'
       });
     }
-    
-    let imagemPath = produtoExists.rows[0].imagemPath;
+
+    const caminhoImagemAntiga = path.join(__dirname, '..'+ produtoExists.rows[0].imagem);
+    console.log(caminhoImagemAntiga);
     
 
-    const query = 'UPDATE produto SET nome = $1, descricao = $2, preco = $3, estoque = $4 WHERE id = $5 RETURNING id, nome, descricao, preco, estoque';
-    const params = [nome, descricao, preco, estoque, id];
-
+    const query = 'UPDATE produto SET nome = $1, descricao = $2, preco = $3, estoque = $4, imagem = $5 WHERE id = $6 RETURNING id, nome, descricao, preco, estoque, imagem';
+    const params = [nome, descricao, preco, estoque, (imagemPath != "" ? imagemPath : caminhoImagemAntiga), id];
+// erro ao apagar imagem antiga e deixar a imagem anterior
     const result = await pool.query(query, params);
+
+    if(imagemPath != "") fs.unlinkSync(caminhoImagemAntiga);
 
     res.json({
       success: true,

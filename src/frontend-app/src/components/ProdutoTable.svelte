@@ -13,7 +13,7 @@
       id: number;
       nome: string;
       descricao: string;
-      preco: number;
+      preco: number; 
       estoque: number;
       imagem: string;
   };
@@ -21,7 +21,7 @@
   let produtos: Produto[] = [];
   let erro = '';
   let search = '';
-  let isAdmin = false;
+  let isAdmin = false; 
   let loading = false;
 
   let user: User | null = null;
@@ -54,6 +54,7 @@
       const token = getToken();
       if (!token) {
         isAdmin = false;
+        return;
       }
       else{
         const res = await api.get('/users/me');
@@ -122,7 +123,7 @@
   }
     
   let produto: Produto[] = []; // lista de usuários
-  let loading = true;
+  
   let error = '';
   let deletingId: number | null = null; // id em deleção
   let confirmOpen = false; // modal aberto?
@@ -147,9 +148,12 @@
   }
   
   onMount(async () => {
+  try {
     await buscarUsuarioLogado();
+  } finally {
     await buscarProdutos();
-  });
+  }
+});
 
   $: {
     if (search.length >= 3) {

@@ -101,6 +101,11 @@
         formData.append('imagem', imagemFile);
       }
 
+      // Usando entries()
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
       // Envia os dados para a API
       if (id === null) {
         await api.post('/produto', formData, {
