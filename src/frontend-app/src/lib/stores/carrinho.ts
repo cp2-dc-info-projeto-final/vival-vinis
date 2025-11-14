@@ -9,6 +9,7 @@ export type ItemCarrinho = {
   preco: number; // ✅ troque string -> number
   estoque: number;
   imagem: string;
+  quantidade: number;
 };
 
 
@@ -107,7 +108,7 @@ export const totalItems = derived(internal, $items =>
 export const totalPrice = derived(internal, $items =>
   $items.reduce((sum, item) => {
     const precoNum = parseFloat(String(item.preco).replace(',', '.')) || 0;
-    return sum + precoNum * (item.estoque || 0);
+    return sum + precoNum * (item.quantidade || 0);
   }, 0)
 );
 

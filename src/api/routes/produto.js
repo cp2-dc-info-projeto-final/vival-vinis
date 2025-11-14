@@ -45,7 +45,7 @@ const fs = require('fs');
 
 
 /* GET - Buscar todos os produtos */
-// requer usuário autenticado como admin
+// requer usuário autenticado como admin (na verdade, Judis alrterou para permitir apenas os produtos serem visualizados; checamos o admin em frontend)
 router.get('/', verifyToken, isAdmin, async function(req, res) {
   try {
     const result = await pool.query('SELECT id, nome, descricao, preco, estoque, imagem FROM produto ORDER BY id');

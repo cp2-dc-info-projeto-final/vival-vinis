@@ -36,8 +36,8 @@
           <div class="flex items-center justify-between py-4 border-b border-gray-200 last:border-b-0">
             <div class="flex-1">
               <h3 class="font-semibold text-lg">{item.nome_produto}</h3>
-              <p class="text-gray-600 text-sm">{item.descricao}</p>
-              <p class="text-green-600 font-semibold mt-1">
+              <p class="text-gray-900 text-sm">{item.descricao}</p>
+              <p class="text-green-900 font-semibold mt-1">
                 R$ {String(item.preco).replace('.', ',')}
               </p>
             </div>
@@ -45,14 +45,14 @@
             <div class="flex items-center gap-4">
               <div class="flex items-center gap-2">
                 <button
-                  on:click={() => atualizarQuantidade(item.id, item.estoque - 1)}
+                  on:click={() => {atualizarQuantidade(item.id, item.quantidade - 1)}}
                   class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 >
                   −
                 </button>
-                <span class="w-8 text-center font-semibold">{item.estoque}</span>
+                <span class="w-8 text-center font-semibold">{item.quantidade}</span>
                 <button
-                  on:click={() => atualizarQuantidade(item.id, item.estoque + 1)}
+                  on:click={() => {atualizarQuantidade(item.id, item.quantidade + 1)}}
                   class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 >
                   +
@@ -74,19 +74,19 @@
       <div class="bg-gray-50 px-6 py-4">
         <div class="flex justify-between items-center mb-4">
           <span class="text-lg font-semibold">Total:</span>
-          <span class="text-xl font-bold text-green-500">R$ {total.toFixed(2).replace('.', ',')}</span>
+          <span class="text-xl font-bold text-green-900">R$ {total.toFixed(2).replace('.', ',')}</span>
         </div>
         
         <div class="flex gap-3">
           <button
             on:click={limparCarrinho}
-            class="flex-1 bg-pink-400 hover:bg-pink-700 text-white py-3 px-4 rounded-lg transition-colors"
+            class="flex-1 bg-green-700 hover:bg-green-900 text-white py-3 px-4 rounded-lg transition-colors"
           >
             Limpar Carrinho
           </button>
           <button
             on:click={finalizarCompra}
-            class="flex-1 bg-green-500 hover:bg-green-700 text-white py-3 px-4 rounded-lg transition-colors"
+            class="flex-1 bg-green-700 hover:bg-green-900 text-white py-3 px-4 rounded-lg transition-colors"
           >
             Finalizar Compra
           </button>
@@ -94,7 +94,7 @@
         
         <button 
           on:click={() => goto('/')} 
-          class="w-full mt-3 text-pink-400 hover:text-pink-700 py-2 transition-colors"
+          class="w-full mt-3 text-green-600 hover:text-green-900 py-2 transition-colors"
         >
           ← Continuar Comprando
         </button>
