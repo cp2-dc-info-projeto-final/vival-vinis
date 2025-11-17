@@ -80,7 +80,7 @@
         {/if}
       {:else}
         <!-- se não tem token, exibe botão de login-->
-        <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-white hover:text-white hover:bg-gray-100 focus:text-white focus:bg-white transition-colors rounded-lg">Login</NavLi>
+        <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Login</NavLi>
       {/if}
     </NavUl>
 

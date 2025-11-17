@@ -50,3 +50,42 @@ CREATE TABLE produto (
     FOREIGN KEY(produto_id) REFERENCES produto(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE compras (
+  id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  usuario_id BIGINT NOT NULL,
+  endereco TEXT,
+  total DECIMAL(10, 2) NOT NULL, 
+  status TEXT NOT NULL DEFAULT 'PENDENTE',
+  data_pedido TIMESTAMP DEFAULT NOW(),
+  atualizado_em TIMESTAMP DEFAULT NOW(),
+
+  -- chave estrangeira para usuários
+
+  CONSTRAINT fl_pedido_usuario
+    FOREIGN KEY (usuario_id)
+    REFERENCES usuario(id)
+    ON DELETE CASCADE
+    );
+
+CREATE TABLE itens_pedidos (
+    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    compras_id BIGINT NOT NULL,
+    produto_id BIGINT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    criado_em TIMESTAMP DEFAULT NOW(),
+
+    --chaves estrangeiras
+
+   CONSTRAINT fl_item_pedido
+    FOREIGN KEY (compras_id)
+    REFERENCES compras(id)
+    ON DELETE CASCADE,
+
+   CONSTRAINT fl_item_produto
+    FOREIGN KEY (produto_id)
+    REFERENCES produto(id)
+    ON DELETE CASCADE
+    );

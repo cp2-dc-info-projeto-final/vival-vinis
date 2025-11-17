@@ -85,7 +85,7 @@
             Limpar Carrinho
           </button>
           <button
-            on:click={finalizarCompra}
+          on:click={() => goto('/concluir_compra')}
             class="flex-1 bg-green-700 hover:bg-green-900 text-white py-3 px-4 rounded-lg transition-colors"
           >
             Finalizar Compra

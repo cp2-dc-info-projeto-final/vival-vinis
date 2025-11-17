@@ -77,8 +77,18 @@ type Produto = {
 
 <Menu />
 
-
-<div class="nav-right">
+<br><br><br><br><br>
+<div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+  <!-- Item 1 -->
+ <div class="duration-700 ease-in-out" data-carousel-item>
+     <img src="../images/vival vinis.png" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+ </div>
+ <!-- Item 2 -->
+ <div class="hidden duration-700 ease-in-out" data-carousel-item>
+ </div>
+</div>
+<br><br>
+<div class="nav-right text-center">
     <Heading>NOSSO CATÁLOGO</Heading>
         <p>
             Conheça nosso catálogo de vinis!
