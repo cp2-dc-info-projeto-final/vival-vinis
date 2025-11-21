@@ -46,6 +46,10 @@
             <span class="text-xl font-bold text-green-900">R$ {total.toFixed(2).replace('.', ',')}</span>
           </div>
           
+          <div>
+            <Label for="nome">Nome:</Label>
+            <Input id="nome" bind:value={compras.endereco} placeholder="Digite o nome" required class="mt-1" />
+          </div>
           <div class="flex gap-3">
             <button
               on:click={finalizarCompra}

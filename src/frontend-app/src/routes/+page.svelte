@@ -103,7 +103,7 @@ type Produto = {
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
 <button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={() => goto('/cadastroproduto')}>
    
-    Consulta ou Cadastro de Produtos
+    Cadastro de Produtos
 </button>
 
           {/if}

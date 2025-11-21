@@ -4,6 +4,7 @@
   import { onMount } from 'svelte'; // ciclo de vida
   import { adicionarAoCarrinho } from '$lib/stores/carrinho'
   import {getToken, getCurrentUser, type User} from '$lib/auth';
+  import { TrashBinOutline } from 'flowbite-svelte-icons'; // ícones
   import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
  
   const baseURL = api.defaults.baseURL;
@@ -140,11 +141,31 @@
     confirmTargetId = null;
   }
 
+  // Confirma remoção
+  function handleConfirm() {
+    if (confirmTargetId !== null) {
+      handleDelete(confirmTargetId);
+    }
     closeConfirm();
+  }
 
   // Cancela remoção
   function handleCancel() {
     closeConfirm();
+  }
+
+  async function handleDelete(id: number) {
+    deletingId = id;
+    error = '';
+    try {
+      await api.delete(`/produto/${id}`);
+      produtos = produtos.filter(produto => produto.id !== id);
+    } catch (e: any) {
+      console.error('Erro ao deletar produto:', e);
+      error = e.response?.data?.message || 'Erro ao remover produto.';
+    } finally {
+      deletingId = null;
+    }
   }
   
   onMount(async () => {
@@ -168,6 +189,7 @@
 
 </script>
 
+
 {#if erro}
 <p class="text-red-500 mb-4">{erro}</p>
 {:else if loading}
@@ -183,7 +205,7 @@
           <img 
             src={baseURL + produto.imagem} 
             alt={produto.nome}
-            class="w-full h-48 object-cover rounded-lg border"
+            class="w-full h-80 object-cover rounded-lg border"
             on:error={(e) => {
                 const target = e.target;
                 if (target instanceof HTMLImageElement) {
@@ -228,15 +250,28 @@
           >
             Editar
           </button>
-          <button
-            class="bg-red-400 hover:bg-red-600 text-white px-3 py-2 rounded text-sm w-full transition-colors"
-            on:click={() => removerProduto(produto.id)}
-          >
-            Remover
-          </button>
+           <!-- Botão remover -->
+           <button
+           title="Remover"
+           class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
+           on:click={() => openConfirm(produto.id)}
+           disabled={deletingId === produto.id || loading}
+         >
+           <TrashBinOutline class="w-5 h-5 text-red-400" />
+         </button>
         </div>
       {/if}
     </div>
     {/each}
   </div>
 {/if}
+
+<!-- Modal de confirmação -->
+<ConfirmModal
+  open={confirmOpen}
+  message="Tem certeza que deseja remover este produto?"
+  confirmText="Remover"
+  cancelText="Cancelar"
+  onConfirm={handleConfirm}
+  onCancel={handleCancel}
+/>
