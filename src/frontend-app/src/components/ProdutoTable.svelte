@@ -4,9 +4,9 @@
   import { onMount } from 'svelte'; // ciclo de vida
   import { adicionarAoCarrinho } from '$lib/stores/carrinho'
   import {getToken, getCurrentUser, type User} from '$lib/auth';
-  import { TrashBinOutline } from 'flowbite-svelte-icons'; // ícones
-  import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação
- 
+  import { TrashBinOutline,  UserEditOutline } from 'flowbite-svelte-icons'; // ícones
+  import ConfirmModal from './ConfirmModal.svelte'; // modal de confirmação]
+  
   const baseURL = api.defaults.baseURL;
 
   // Tipagem para Produto
@@ -99,11 +99,11 @@
     erro = '';
     loading = true;
     try {
-      const res = await api.get(`/produtos/nome_produto/${encodeURIComponent(nome)}`);
-      produtos = res.data.data;
+      const res = await api.get(`/produto/nome_produto/${encodeURIComponent(nome)}`);
+      produto = res.data.data;
     } catch (e: any) {
       erro = e.response?.data?.message || 'Erro ao buscar produtos por nome';
-      produtos = [];
+      produto = [];
     } finally {
       loading = false;
     }
@@ -230,7 +230,7 @@
 
       <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
         <button
-          class="bg-green-700 hover:bg-green-900 text-white px-3 py-2 rounded text-sm w-full flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+          class="bg-green-800 hover:bg-green-800 text-white px-3 py-2 rounded text-sm w-full flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           on:click={() => adicionarProdutoAoCarrinho(produto)}
           disabled={produtoAdicionado === produto.id}
         >
@@ -244,20 +244,22 @@
       
       {#if user?.role === 'admin'}
         <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+          <!-- Botão editar -->
           <button
-            class="bg-green-600 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full transition-colors"
-            on:click={() => goto(`/cadastroproduto/edit/${produto.id}`)}
-          >
-            Editar
-          </button>
+          class="p-2 rounded border border-green-800 hover:border-green-800 transition bg-transparent"
+          title="Editar"
+          on:click={() => goto(`/cadastroproduto/edit/${produto.id}`)}
+        >
+          <UserEditOutline class="w-5 h-5 text-green-800" />
+        </button>
            <!-- Botão remover -->
            <button
            title="Remover"
-           class="p-2 rounded border border-red-100 hover:border-red-300 transition bg-transparent"
+           class="p-2 rounded border border-green-800 hover:border-green-800 transition bg-transparent"
            on:click={() => openConfirm(produto.id)}
            disabled={deletingId === produto.id || loading}
          >
-           <TrashBinOutline class="w-5 h-5 text-red-400" />
+           <TrashBinOutline class="w-5 h-5 text-green-800" />
          </button>
         </div>
       {/if}

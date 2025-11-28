@@ -89,27 +89,12 @@ type Produto = {
 </div>
 <br><br>
 <div class="nav-right text-center">
-    <Heading>NOSSO CATÁLOGO</Heading>
+    <Heading>MAIS VENDIDOS</Heading>
         <p>
             Conheça nosso catálogo de vinis!
         </p>
 
 </div>
-
-      
-{#if hasToken}
-        {#if user} <!-- se existir usuário é porque conseguiu logar-->
-   
-          {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
-<button class="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-gray rounded-lg font-semibold shadow transition" on:click={() => goto('/cadastroproduto')}>
-   
-    Cadastro de Produtos
-</button>
-
-          {/if}
-        {/if}
-{/if}
-
 <ProdutoTable/>
 
 
