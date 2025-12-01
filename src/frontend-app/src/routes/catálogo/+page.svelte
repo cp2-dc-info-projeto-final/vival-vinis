@@ -63,7 +63,7 @@
        {#if user}
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
           <button 
-          class="flex items-center gap-2 px-4 py-2 bg-green-800 hover:bg-green-800 text-gray rounded-lg font-semibold shadow transition" 
+          class="flex items-center gap-2 px-4 py-2 bg-green-800 hover:bg- green-900 text-gray rounded-lg font-semibold shadow transition" 
           on:click={() => goto('/cadastroproduto/new')}
         >
           Cadastrar

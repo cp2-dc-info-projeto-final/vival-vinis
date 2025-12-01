@@ -53,25 +53,24 @@
   <Navbar class="fixed start-0 top-0 z-20 w-full  px-2 py-2.5 sm:px-4" style="background-color:#3D4127;">
     <NavBrand href="/">
       <img src="/images/1000285043 (1).png" class="me-10 h-10 sm:h-10" alt="Logo aleatória" />
-      <Heading class="self-center text-xl font-semibold whitespace-nowrap text-gray-300 text-primary-100">vival</Heading>
+      <Heading class="self-center text-xl font-semibold whitespace-nowrap text-gray-300 text-green-100">vival</Heading>
     </NavBrand>
     <NavHamburger/>
     <NavUl>
-      <NavLi href="/" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-800 rounded-lg"> Home </NavLi>
+      <NavLi href="/" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg"> Home </NavLi>
 
       <NavLi href="/catálogo" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Catálogo</NavLi>
+      <NavLi href="/carrinho" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">🛒</NavLi>
       {#if hasToken}
         {#if user} <!-- se existir usuário é porque conseguiu logar-->
-          <NavLi href="/carrinho" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">🛒</NavLi>
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
-            <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
-            <NavLi href="/pedido" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
+            <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
           {/if}
           <NavLi>
             <div class="flex items-center">
               
               <button 
-                class="ml-2 px-3 py-1 bg-green-900 hover:bg-green-800 text-gray-300 rounded text-sm flex items-center gap-1"
+                class="ml-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-gray-300 rounded text-sm flex items-center gap-1"
                 on:click={handleLogout}
               >
                 <ArrowRightToBracketOutline class="w-4 h-4" />
@@ -82,12 +81,16 @@
         {/if}
       {:else}
         <!-- se não tem token, exibe botão de login-->
-        <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Login</NavLi>
+        <NavLi href="/login" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text- green-900 dark:hover:text-blue-500 rounded-lg">Login</NavLi>
       {/if}
     </NavUl>
 
+    <style>
+      .navbar *:hover {
+        color: #22c55e !important; /* verde tailwind */
+      }
+      </style>
 
-   
   </Navbar>
 </div>
 

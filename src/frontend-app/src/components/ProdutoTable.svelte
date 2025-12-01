@@ -228,6 +228,7 @@
         <p><span class="font-semibold">Quantidade:</span> {produto.estoque}</p>
       </div>
 
+
       <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
         <button
           class="bg-green-800 hover:bg-green-800 text-white px-3 py-2 rounded text-sm w-full flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
@@ -246,7 +247,7 @@
         <div class="mt-4 flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
           <!-- Botão editar -->
           <button
-          class="p-2 rounded border border-green-800 hover:border-green-800 transition bg-transparent"
+          class="p-2 rounded border border-green-800 hover:border-green-900 transition bg-transparent"
           title="Editar"
           on:click={() => goto(`/cadastroproduto/edit/${produto.id}`)}
         >
