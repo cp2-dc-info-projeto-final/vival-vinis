@@ -1,17 +1,60 @@
 <script lang="ts">
-    import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/carrinho';
-    import { goto } from '$app/navigation';
-  
-    let compras = [];
-    // variável reativa para o total (totalPrice é um derived store)
-    $: total = $totalPrice;
-  
-    function finalizarCompra() {
-      alert('Compra finalizada com sucesso! Total: R$ ' + total.toFixed(2));
+  import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/carrinho';
+  import { goto } from '$app/navigation';
+  import api from '$lib/api';
+  import { getCurrentUser } from '$lib/auth';
+  import { type User } from "$lib/auth"
+
+  // variável reativa para o total
+  $: total = $totalPrice;
+
+  let endereco: string = "";
+
+  // user precisa ser resolvido com await
+  let user: User | null = null;
+
+  // carregar usuário assim que o componente montar
+  $: (async () => {
+      user = await getCurrentUser();
+  })();
+
+  // Tipagem para Compra
+  type Compra = {
+      id_usuario: number;
+      endereco: string;
+      itens: object;
+      status: string;
+      data_pedido: Date;
+      atualizado_em: Date;
+  };
+
+  let formData: Compra | null = null;
+
+  async function finalizarCompra() {
+      if (!user) {
+          alert("Você precisa estar logado para finalizar a compra.");
+          return;
+      }
+
+      formData = {
+          id_usuario: Number(user.id),
+          endereco: endereco,
+          itens: $carrinho, // precisa pegar o valor do store
+          status: 'novo',
+          data_pedido: new Date(),
+          atualizado_em: new Date(),
+      };
+
+      await api.post('/compra', formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      });
+
       limparCarrinho();
       goto('/');
-    }
-  </script>
+  }
+</script>
   
   <svelte:head>
     <title>Carrinho de Compras</title>
@@ -49,7 +92,7 @@
           
           <div>
             <label for="nome">Endereço:</label>
-            <input id="nome" bind:value={compras.endereco} placeholder="Digite o endereço" required class="mt-1" />
+            <input id="nome" bind:value={endereco} placeholder="Digite o endereço" required class="mt-1" />
           </div>
           <div class="flex gap-3">
             <button

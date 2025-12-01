@@ -65,7 +65,7 @@
           <NavLi href="/carrinho" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">🛒</NavLi>
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
             <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
-            <NavLi href="/pedido" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
+            <NavLi href="/pedidos" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
           {/if}
           <NavLi>
             <div class="flex items-center">
