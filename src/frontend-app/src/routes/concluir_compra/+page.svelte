@@ -2,6 +2,7 @@
     import { carrinho, removerDoCarrinho, atualizarQuantidade, limparCarrinho, totalPrice } from '$lib/stores/carrinho';
     import { goto } from '$app/navigation';
   
+    let compras = [];
     // variável reativa para o total (totalPrice é um derived store)
     $: total = $totalPrice;
   
@@ -47,8 +48,8 @@
           </div>
           
           <div>
-            <Label for="nome">Nome:</Label>
-            <Input id="nome" bind:value={compras.endereco} placeholder="Digite o nome" required class="mt-1" />
+            <label for="nome">Endereço:</label>
+            <input id="nome" bind:value={compras.endereco} placeholder="Digite o endereço" required class="mt-1" />
           </div>
           <div class="flex gap-3">
             <button
