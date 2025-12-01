@@ -64,7 +64,12 @@
       {#if hasToken}
         {#if user} <!-- se existir usuário é porque conseguiu logar-->
           {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
+<<<<<<< HEAD
             <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
+=======
+            <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
+            <NavLi href="/pedidos" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
+>>>>>>> 570697c845ed4a9e3c0f855aec56a040e3352e00
           {/if}
           <NavLi>
             <div class="flex items-center">

@@ -29,7 +29,7 @@ router.get('/', verifyToken, isAdmin, async function(req, res) {
 /* POST - Criar novo compra */
 router.post('/', verifyToken, isAdmin, async function(req, res) {
   try {
-    const { usuario_id, endereco, total, status, data_pedido, atualizado_em } = req.body;
+    const { usuario_id, endereco, total, status, data_pedido, atualizado_em, itens } = req.body;
 
     if (!endereco) {
       return res.status(400).json({
@@ -37,11 +37,15 @@ router.post('/', verifyToken, isAdmin, async function(req, res) {
         message: 'Preencha o campo do endereço'
       });
     }
+
+    console.log('body recebido: ', req.body);
   
     const result = await pool.query(
       'INSERT INTO compras (usuario_id, endereco, total, status) VALUES ($1, $2, $3, $4) RETURNING *',
       [usuario_id, endereco, total, status]
     );
+
+    console.log('compra inserida: ', result);
 
     res.status(201).json({
       success: true,
