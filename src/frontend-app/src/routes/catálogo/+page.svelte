@@ -4,8 +4,8 @@
     import { produto as authProduto } from "$lib/api";
     import { onMount } from "svelte";
     import { logout, getCurrentUser, getToken, type User } from "$lib/auth";
-    import ProdutoTable from "../../components/ProdutoTable.svelte";
     import { page } from "$app/stores";
+    import ProdutoTable from '../components/ProdutoTable.svelte';
 
     let user: User | null = $page.data.user;
   let hasToken = !!user;
@@ -58,6 +58,7 @@
 
 </div>
 
+<ProdutoTable/>
 
 {#if hasToken}
        {#if user}

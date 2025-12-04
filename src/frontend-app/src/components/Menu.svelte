@@ -52,26 +52,23 @@
 <div class="relative px-8">
   <Navbar class="fixed start-0 top-0 z-20 w-full  px-2 py-2.5 sm:px-4" style="background-color:#3D4127;">
     <NavBrand href="/">
-      <img src="/images/1000285043 (1).png" class="me-10 h-10 sm:h-10" alt="Logo aleatória" />
-      <Heading class="self-center text-xl font-semibold whitespace-nowrap text-gray-300 text-green-100">vival</Heading>
+      <img src="/images/1000285043 (1).jpeg" class="me-10 h-10 sm:h-20" alt="Logo aleatória" />
+      <Heading class="self-center text-xl font-semibold whitespace-nowrap text-gray-300 text-white">vival</Heading>
     </NavBrand>
     <NavHamburger/>
     <NavUl>
       <NavLi href="/" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg"> Home </NavLi>
 
-      <NavLi href="/catálogo" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Catálogo</NavLi>
-      <NavLi href="/carrinho" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">🛒</NavLi>
-      {#if hasToken}
-        {#if user} <!-- se existir usuário é porque conseguiu logar-->
-          {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
-<<<<<<< HEAD
-            <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
-=======
-            <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
-            <NavLi href="/pedidos" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
->>>>>>> 570697c845ed4a9e3c0f855aec56a040e3352e00
-          {/if}
-          <NavLi>
+          <NavLi href="/catálogo" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">Catálogo</NavLi>
+          <NavLi href="/carrinho" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-600 dark:hover:text-blue-500 rounded-lg">🛒</NavLi>
+          {#if hasToken}
+            {#if user} <!-- se existir usuário é porque conseguiu logar-->
+              {#if user.role === 'admin'} <!-- só exibe menu usuários para admin-->
+                <NavLi href="/users" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Usuários</NavLi>
+                <NavLi href="/pedidos" class="text-lg font-bold px-4 py-2 text-gray-300 dark:text-gray-400 hover:text-green-800 dark:hover:text-blue-500 rounded-lg">Pedidos</NavLi>
+   
+              {/if}
+              <NavLi>
             <div class="flex items-center">
               
               <button 
