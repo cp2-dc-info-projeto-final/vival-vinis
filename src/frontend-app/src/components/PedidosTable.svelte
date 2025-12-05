@@ -50,7 +50,7 @@
     deletingId = id;
     error = '';
     try {
-      await api.delete(`/produto/${id}`);
+      await api.delete(`/compra/${id}`);
       compras = compras.filter(compras => compras.id !== id);
     } catch (e: any) {
       console.error('Erro ao deletar produto:', e);

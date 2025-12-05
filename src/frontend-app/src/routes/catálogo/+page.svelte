@@ -5,7 +5,8 @@
     import { onMount } from "svelte";
     import { logout, getCurrentUser, getToken, type User } from "$lib/auth";
     import { page } from "$app/stores";
-    import ProdutoTable from '../components/ProdutoTable.svelte';
+    import ProdutoTable from "../../components/ProdutoTable.svelte";
+    
 
     let user: User | null = $page.data.user;
   let hasToken = !!user;
@@ -50,6 +51,8 @@
   }
 </script>
 
+<br><br><br><br><br>
+
 <div class="nav-right text-center">
     <Heading>NOSSO CATÁLOGO</Heading>
         <p>
@@ -58,7 +61,7 @@
 
 </div>
 
-<ProdutoTable/>
+
 
 {#if hasToken}
        {#if user}
@@ -70,9 +73,10 @@
           Cadastrar
         </button>
           {/if}
-          {/if}
         {/if}
+  {/if}
 
+      <ProdutoTable />
 
 <footer class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">

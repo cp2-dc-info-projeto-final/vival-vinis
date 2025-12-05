@@ -72,11 +72,11 @@
             <div class="flex items-center">
               
               <button 
-                class="ml-2 px-3 py-1 bg-green-600 hover:bg-green-700 text-gray-300 rounded text-sm flex items-center gap-1"
+                class="ml-2 px-3 py-1 bg-lime-900 hover:bg-green-900 text-gray-300 rounded text-sm flex items-center gap-1"
                 on:click={handleLogout}
               >
                 <ArrowRightToBracketOutline class="w-4 h-4" />
-                Sair
+                
               </button>
             </div>
           </NavLi>
@@ -87,12 +87,7 @@
       {/if}
     </NavUl>
 
-    <style>
-      .navbar *:hover {
-        color: #22c55e !important; /* verde tailwind */
-      }
-      </style>
-
+   
   </Navbar>
 </div>
 

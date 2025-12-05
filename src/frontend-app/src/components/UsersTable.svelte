@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import api from '$lib/api';
   import { onMount } from 'svelte';
-
+  
   type User = {
     id: number;
     login: string;
@@ -16,9 +16,39 @@
   let users: User[] = [];
   let loading = true;
   let error = '';
+  let search = '';
   let deletingId: number | null = null;
   let confirmOpen = false;
   let confirmTargetId: number | null = null;
+
+  
+  async function buscarUsuarios() {
+    error = '';
+    loading = true;
+    try {
+      const res = await api.get('/users');
+      users = res.data.data;
+    } catch (e: any) {
+      error = e.response?.data?.message || 'Erro ao buscar usuários';
+      users = [];
+    } finally {
+      loading = false;
+    }
+  }
+
+  async function buscarUsuariosPorNome(nome: string) {
+    error = '';
+    loading = true;
+    try {
+      const res = await api.get(`/users/nome/${encodeURIComponent(nome)}`);
+      users = res.data.data;
+    } catch (e: any) {
+      error = e.response?.data?.message || 'Erro ao buscar produtos por nome';
+      users = [];
+    } finally {
+      loading = false;
+    }
+  }
 
   function openConfirm(id: number) {
     confirmTargetId = id;
@@ -51,7 +81,16 @@
     }
   }
 
+  $: {
+    if (search.length >= 1) {
+      buscarUsuariosPorNome(search);
+    } else if (search.length === 0) {
+      buscarUsuarios();
+    } 
+  }
+
   onMount(async () => {
+    await buscarUsuarios();
     try {
       const res = await api.get('/users');
       users = res.data.data;
@@ -64,6 +103,15 @@
     }
   });
 </script>
+
+  <h1 class="text-2xl font-bold text-center mb-6">𝐋𝐢𝐬𝐭𝐚 𝐝𝐞 Usuários</h1>
+
+  <input
+    type="text"
+    placeholder="Pesquisar planta por nome..."
+    bind:value={search}
+    class="w-full mb-6 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+  />
 
 {#if loading}
   <div class="my-8 text-center text-gray-500">Carregando usuários...</div>

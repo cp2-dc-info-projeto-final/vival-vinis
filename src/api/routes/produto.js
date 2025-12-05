@@ -120,6 +120,32 @@ router.get('/:id', verifyToken, isAdmin, async function(req, res) {
   }
 });
 
+/* GET parametrizado - Buscar produto por nome */
+router.get('/nome/:nome', async function(req, res, next) {
+  try {
+    const { nome } = req.params;
+    const result = await pool.query('SELECT * FROM produto WHERE nome LIKE $1', ['%'+nome+'%']);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Produto não encontrado'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: result.rows
+   });
+  } catch (error) {
+    console.error('Erro ao buscar produto:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor'
+    });
+  }
+});
+
 /* POST - Criar novo produto */
 router.post('/', verifyToken, isAdmin, upload.single('imagem'), async function(req, res) {
   try {

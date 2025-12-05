@@ -120,7 +120,7 @@
               }
           });
       }
-      goto('/cadastroproduto');
+      goto('/catálogo');
     } catch (e: any) {
       error = e.response?.data?.message || 'Erro ao salvar produto.';
     } finally {

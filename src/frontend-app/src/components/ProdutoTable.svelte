@@ -99,7 +99,7 @@
     erro = '';
     loading = true;
     try {
-      const res = await api.get(`/produto/nome_produto/${encodeURIComponent(nome)}`);
+      const res = await api.get(`/produto/nome/${encodeURIComponent(nome)}`);
       produto = res.data.data;
     } catch (e: any) {
       erro = e.response?.data?.message || 'Erro ao buscar produtos por nome';
@@ -177,18 +177,22 @@
 });
 
   $: {
-    if (search.length >= 3) {
+    if (search.length >= 1) {
       buscarProdutosPorNome(search);
     } else if (search.length === 0) {
       buscarProdutos();
-    } else {
-      produtos = [];
-      erro = 'Digite pelo menos 3 caracteres para buscar.';
     }
   }
 
 </script>
+<h1 class="text-2xl font-bold text-center mb-6">𝐋𝐢𝐬𝐭𝐚 𝐝𝐞 Produtos</h1>
 
+  <input
+    type="text"
+    placeholder="Pesquisar produto por nome..."
+    bind:value={search}
+    class="w-full mb-6 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+  />
 
 {#if erro}
 <p class="text-red-500 mb-4">{erro}</p>

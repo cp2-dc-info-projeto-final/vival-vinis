@@ -1,6 +1,6 @@
 
 <script lang="ts">
-	import '../app.css';
+	import '../../app.css';
 	import Menu from '../../components/Menu.svelte';
     import PedidosTable from '../../components/PedidosTable.svelte';
 	let { children } = $props();
