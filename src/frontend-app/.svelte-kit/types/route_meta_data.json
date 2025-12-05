@@ -1,0 +1,16 @@
+{
+	"/": [],
+	"/about": [],
+	"/cadastroproduto": [],
+	"/cadastroproduto/edit/[id]": [],
+	"/cadastroproduto/new": [],
+	"/cadastro": [],
+	"/carrinho": [],
+	"/catálogo": [],
+	"/concluir_compra": [],
+	"/login": [],
+	"/pedidos": [],
+	"/users": [],
+	"/users/edit/[id]": [],
+	"/users/new": []
+}
