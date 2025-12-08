@@ -2,20 +2,57 @@
 
 ## Requisitos Funcionais
 
-### RF 01
+## RF01
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nulla vel diam vehicula, eu porttitor nulla aliquam.
+O sistema deve permitir o cadastro de usuários.
 
-### RF 02
+## RF02
 
-Nullam laoreet, mauris ac tempor vulputate, orci metus aliquet augue, at accumsan odio mi eu sapien. Aliquam tincidunt metus ut aliquet vehicula. Aliquam vitae arcu sed lacus fermentum sagittis.
+O sistema deve permitir o login com validação de credenciais.
+
+## RF03
+
+O sistema deve exibir o catálogo de produtos.
+
+## RF04
+
+O sistema deve permitir adicionar e remover itens do carrinho.
+
+## RF05
+
+O sistema deve permitir finalizar a compra.
+
+## RF06
+
+O administrador deve poder cadastrar, editar e excluir produtos.
+
+## RF07
+
+O administrador deve poder gerenciar usuários (cadastrar, editar e excluir).
+
+## RF08
+
+O sistema deve permitir realizar logout.
+
 
 ## Requisitos Não-Funcionais
 
-### RNF 01
+## RNF01
 
-Nulla facilisi. Etiam tempus dolor et odio tincidunt fermentum. Donec pharetra nulla eu euismod maximus. Maecenas eu mauris tincidunt, pulvinar tellus sed, blandit eros.
+O sistema deve ser responsivo e funcionar em dispositivos móveis.
 
-### RNF 02
+## RNF02
 
-Nam id enim ut quam faucibus scelerisque at non diam. Morbi eget eleifend lectus, quis fringilla elit. Morbi iaculis, elit vel accumsan hendrerit, ipsum purus varius lacus, eget facilisis massa mauris ac ipsum.
+O sistema deve armazenar senhas de forma criptografada.
+
+## RNF03
+
+O sistema deve respeitar as normas de proteção de dados.
+
+## RNF04
+
+O tempo de resposta deve ser adequado à experiência do usuário.
+
+## RNF05
+
+autenticação.
