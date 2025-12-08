@@ -1,234 +1,4 @@
-CASO DE USO: Sistema de Gerenciamento da Vival Vinis
-
-Atores:
-
-Cliente (Usuário não administrador)
-
-Administrador
-
-VISÃO GERAL DO SISTEMA:
-A Vival Vinis é uma loja online de vinis que oferece funcionalidades diferenciadas para clientes e administradores através de um sistema web.
-
-CASOS DE USO PARA CLIENTE
-
-Caso de Uso 1: Cadastro de Cliente
-
-Atores: Cliente
-
-Fluxo Principal: Similar ao caso de uso fornecido
-
-Fluxos Alternativos: Similar ao caso de uso fornecido
-
-Caso de Uso 2: Login de Usuário
-
-Atores: Cliente
-
-Fluxo Principal:
-
-Cliente acessa a página inicial
-
-Cliente clica em "Login"
-
-Sistema exibe formulário de login
-
-Cliente insere email e senha
-
-Sistema valida credenciais
-
-Sistema redireciona para página inicial com usuário logado
-
-Caso de Uso 3: Navegação no Catálogo
-
-Atores: Cliente
-
-Fluxo Principal:
-
-Cliente acessa a página inicial
-
-Cliente visualiza produtos em destaque
-
-Cliente clica em "Catálogo Completo"
-
-Sistema exibe todos os produtos disponíveis
-
-Cliente pode filtrar por gênero, artista ou preço
-
-Caso de Uso 4: Gerenciamento do Carrinho
-
-Atores: Cliente
-
-Fluxo Principal:
-
-Cliente seleciona produto
-
-Cliente clica em "Adicionar ao Carrinho"
-
-Sistema adiciona item ao carrinho
-
-Cliente acessa carrinho para visualizar itens
-
-Cliente pode finalizar compra ou continuar navegando
-
-CASOS DE USO PARA ADMINISTRADOR
-
-Caso de Uso 5: Login de Administrador
-
-Atores: Administrador
-
-Fluxo Principal:
-
-Administrador acessa página de login administrativo
-
-Insere credenciais de administrador
-
-Sistema valida permissões
-
-Sistema redireciona para dashboard administrativo
-
-Caso de Uso 6: Gerenciamento de Produtos
-
-Atores: Administrador
-
-Fluxo Principal:
-
-Administrador acessa dashboard
-
-Clica em "Gerenciar Produtos"
-
-Sistema exibe lista completa de produtos
-
-Administrador pode cadastrar, editar ou excluir produtos
-
-Fluxo Alternativo 6A: Cadastrar Novo Produto
-
-Administrador clica em "Cadastrar Produto"
-
-Sistema exibe formulário com campos: título, artista, gênero, preço, estoque, descrição, imagem
-
-Administrador preenche informações
-
-Sistema valida dados e cadastra produto
-
-Sistema atualiza catálogo
-
-Fluxo Alternativo 6B: Editar Produto Existente
-
-Administrador seleciona produto da lista
-
-Clica em "Editar"
-
-Sistema exibe formulário com dados atuais
-
-Administrador modifica informações
-
-Sistema salva alterações
-
-Fluxo Alternativo 6C: Excluir Produto
-
-Administrador seleciona produto
-
-Clica em "Excluir"
-
-Sistema solicita confirmação
-
-Administrador confirma exclusão
-
-Sistema remove produto do catálogo
-
-Caso de Uso 7: Gerenciamento de Usuários
-
-Atores: Administrador
-
-Fluxo Principal:
-
-Administrador acessa dashboard
-
-Clica em "Gerenciar Usuários"
-
-Sistema exibe lista de usuários cadastrados
-
-Administrador pode visualizar, editar ou excluir usuários
-
-Fluxo Alternativo 7A: Cadastrar Novo Usuário
-
-Administrador clica em "Cadastrar Usuário"
-
-Sistema exibe formulário de cadastro
-
-Administrador preenche dados do usuário
-
-Sistema cria nova conta de usuário
-
-Fluxo Alternativo 7B: Editar Usuário Existente
-
-Administrador seleciona usuário
-
-Clica em "Editar"
-
-Sistema exibe dados do usuário
-
-Administrador modifica informações
-
-Sistema salva alterações
-
-Caso de Uso 8: Visualizar Dashboard Administrativo
-
-Atores: Administrador
-
-Fluxo Principal:
-
-Administrador faz login
-
-Sistema exibe dashboard com:
-
-Estatísticas de vendas
-
-Produtos mais vendidos
-
-Usuários cadastrados recentemente
-
-Alertas de estoque baixo
-
-REQUISITOS DO SISTEMA:
-
-Para Clientes:
-
-Página inicial com produtos em destaque
-
-Catálogo completo de produtos
-
-Carrinho de compras
-
-Sistema de login/cadastro
-
-Perfil de usuário
-
-Para Administradores:
-
-Dashboard administrativo
-
-CRUD completo de produtos
-
-CRUD completo de usuários
-
-Controle de estoque
-
-Relatórios de vendas
-
-Regras de Negócio:
-
-Senhas devem ter entre 8-16 caracteres
-
-Emails devem ser únicos no sistema
-
-Produtos com estoque zero não são exibidos para clientes
-
-Apenas administradores podem acessar funcionalidades administrativas
-
-Este caso de uso fornece uma base completa para o desenvolvimento do sistema da Vival Vinis, atendendo tanto às necessidades dos clientes quanto às dos administradores.
-
-junte os de cliente e administrador
-SISTEMA VIVAL VINIS - CASOS DE USO INTEGRADOS
+Casos de uso Vival Vinis
 
 Atores Principais:
 
@@ -244,7 +14,7 @@ Usuário clica no botão "Cadastrar"
 
 Sistema direciona para página de cadastro com formulário
 
-Usuário insere email, senha e nome de usuário
+Usuário insere login, email e senha
 
 Sistema verifica disponibilidade no banco de dados
 
@@ -261,7 +31,7 @@ Fluxo Alternativo A: Email inválido
 6. Sistema sugere uso de outro email
 
 Fluxo Alternativo B: Senha fora dos padrões
-3. Usuário insere senha com menos de 8 ou mais de 16 caracteres
+3. Usuário insere senha fora dos padrões
 4. Sistema verifica padrão da senha
 5. Sistema exibe mensagem de erro
 6. Sistema informa que senha está fora dos padrões
@@ -308,10 +78,7 @@ Usuário clica em "Catálogo Completo"
 
 Sistema exibe todos os produtos disponíveis
 
-Usuário pode filtrar por gênero, artista ou preço
-
-Fluxo Administrativo:
-6. Administrador visualiza opções administrativas no catálogo
+Usuário pode filtrar por nome
 
 CASO DE USO 4: Gerenciamento de Carrinho
 Atores: Cliente, Administrador
@@ -333,15 +100,13 @@ Fluxo Principal:
 
 Administrador faz login
 
-Sistema exibe dashboard administrativo
-
-Administrador clica em "Gerenciar Produtos"
+Administrador clica em "Catalogo de  Produtos"
 
 Sistema exibe lista completa de produtos com opções de editar/excluir
 
 Fluxo Alternativo A: Cadastrar Novo Produto
 4. Administrador clica em "Cadastrar Produto"
-5. Sistema exibe formulário com campos: título, artista, gênero, preço, estoque, descrição, imagem
+5. Sistema exibe formulário com campos: título, preço, estoque, descrição, imagem
 6. Administrador preenche informações
 7. Sistema valida e cadastra produto
 8. Sistema atualiza catálogo
@@ -362,9 +127,9 @@ CASO DE USO 6: Gerenciamento de Usuários (Administrativo)
 Atores: Administrador
 Fluxo Principal:
 
-Administrador acessa dashboard
+sistema exibe menu de administrador
 
-Clica em "Gerenciar Usuários"
+Clica em "Usuários"
 
 Sistema exibe lista de usuários cadastrados
 
@@ -398,20 +163,3 @@ Sistema redireciona para página inicial
 
 Sistema exibe opções de login/cadastro
 
-CASO DE USO 8: Visualização de Dashboard (Administrativo)
-Atores: Administrador
-Fluxo Principal:
-
-Administrador faz login
-
-Sistema exibe dashboard com:
-
-Estatísticas de vendas
-
-Produtos mais vendidos
-
-Usuários cadastrados recentemente
-
-Alertas de estoque baixo
-
-Acesso rápido às funcionalidades administrativas
