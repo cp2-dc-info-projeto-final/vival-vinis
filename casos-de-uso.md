@@ -94,64 +94,157 @@ Usuário acessa carrinho para visualizar itens
 
 Usuário pode finalizar compra ou continuar navegando
 
-CASO DE USO 5: Gerenciamento de Produtos (Administrativo)
-Atores: Administrador
+CASO DE USO 5: Cadastrar Produto
+
+Ator: Administrador
+
 Fluxo Principal:
 
-Administrador faz login
+Administrador acessa painel administrativo
 
-Administrador clica em "Catalogo de  Produtos"
+Clica em “Catálogo de Produtos”
+	
+Seleciona “Cadastrar Produto”
+		
+Sistema exibe formulário de novo produto
+		
+Administrador insere título, preço, descrição, imagem e quantidade
+		
+Administrador confirma cadastro
+		
+Sistema valida e registra o produto
+		
+Sistema exibe mensagem de sucesso e atualiza catálogo
 
-Sistema exibe lista completa de produtos com opções de editar/excluir
+Fluxo Alternativo: Dados Inválidos
+	•	5a. Sistema identifica erros ou campos vazios
+	•	5b. Sistema exibe mensagem indicando correção necessária
+	•	5c. Administrador insere correções e reenviar
 
-Fluxo Alternativo A: Cadastrar Novo Produto
-4. Administrador clica em "Cadastrar Produto"
-5. Sistema exibe formulário com campos: título, preço, estoque, descrição, imagem
-6. Administrador preenche informações
-7. Sistema valida e cadastra produto
-8. Sistema atualiza catálogo
+CASO DE USO 6: Editar Produto
 
-Fluxo Alternativo B: Editar Produto Existente
-4. Administrador seleciona produto e clica em "Editar"
-5. Sistema exibe formulário com dados atuais
-6. Administrador modifica informações
-7. Sistema salva alterações
+Ator: Administrador
 
-Fluxo Alternativo C: Excluir Produto
-4. Administrador seleciona produto e clica em "Excluir"
-5. Sistema solicita confirmação
-6. Administrador confirma exclusão
-7. Sistema remove produto do catálogo
-
-CASO DE USO 6: Gerenciamento de Usuários (Administrativo)
-Atores: Administrador
 Fluxo Principal:
 
-sistema exibe menu de administrador
+Administrador acessa painel administrativo
 
-Clica em "Usuários"
+Clica em “Gerenciar Produtos”
 
-Sistema exibe lista de usuários cadastrados
+Seleciona produto e clica em “Editar”
 
-Fluxo Alternativo A: Cadastrar Novo Usuário
-3. Administrador clica em "Cadastrar Usuário"
-4. Sistema exibe formulário de cadastro
-5. Administrador preenche dados do usuário
-6. Sistema cria nova conta
+Sistema exibe formulário preenchido com dados do produto
 
-Fluxo Alternativo B: Editar Usuário Existente
-3. Administrador seleciona usuário e clica em "Editar"
-4. Sistema exibe dados do usuário
-5. Administrador modifica informações
-6. Sistema salva alterações
+Administrador altera as informações necessárias
 
-Fluxo Alternativo C: Excluir Usuário
-3. Administrador seleciona usuário e clica em "Excluir"
-4. Sistema solicita confirmação
-5. Administrador confirma exclusão
-6. Sistema remove usuário do sistema
+Administrador confirma edição
 
-CASO DE USO 7: Logout do Sistema
+Sistema salva alterações
+
+Sistema retorna catálogo atualizado
+
+Fluxo Alternativo: Cancelar Edição
+	•	6a. Administrador cancela a operação
+	•	6b. Sistema retorna ao catálogo sem modificar dados
+
+CASO DE USO 7: Excluir Produto
+
+Ator: Administrador
+
+Fluxo Principal
+
+Administrador acessa painel administrativo
+
+Clica em “Gerenciar Produtos”
+
+Seleciona produto e clica em “Excluir”
+
+Sistema solicita confirmação
+
+Administrador confirma
+
+Sistema remove produto
+
+Sistema atualiza catálogo exibindo mensagem de exclusão concluída
+
+Fluxo Alternativo: Cancelar Exclusão
+	•	7a. Administrador não confirma
+	•	7b. Sistema mantém produto e retorna ao catálogo
+
+CASO DE USO 8: Cadastrar Usuário
+
+Ator: Administrador
+
+Fluxo Principal:
+	
+Administrador acessa painel administrativo
+
+Clica em “Gerenciar Usuários”
+
+Seleciona “Cadastrar Usuário”
+
+Sistema exibe formulário
+
+Administrador preenche dados do novo usuário
+
+Sistema valida e cria a conta
+
+Sistema exibe mensagem de sucesso e atualiza lista
+
+Fluxo Alternativo: Dados Incorretos
+	•	8a. Dados inválidos
+	•	8b. Sistema solicita correção
+	•	8c. Administrador reenviar
+
+CASO DE USO 9: Editar Usuário
+
+Ator: Administrador
+
+Fluxo Principal
+
+Administrador acessa painel administrativo
+
+Clica em “Gerenciar Usuários”
+
+Seleciona usuário e clica em “Editar”
+
+Sistema exibe dados atuais
+
+Administrador modifica dados
+
+Sistema salva alterações
+
+Sistema atualiza lista de usuários
+
+Fluxo Alternativo: Cancelar Alteração
+	•	9a. Administrador cancela operação
+	•	9b. Sistema mantém dados atuais
+
+CASO DE USO 10: Excluir Usuário
+
+Ator: Administrador
+
+Fluxo Principal:
+
+Administrador acessa painel administrativo
+
+Clica em “Gerenciar Usuários”
+
+Seleciona usuário e clica em “Excluir”
+
+Sistema solicita confirmação
+
+Administrador confirma
+
+Sistema remove o usuário
+
+Sistema atualiza lista exibindo exclusão concluída
+
+Fluxo Alternativo: Cancelar Exclusão
+	•	10a. Administrador não confirma
+	•	10b. Sistema mantém o usuário
+
+CASO DE USO 11: Logout do Sistema
 Atores: Cliente, Administrador
 Fluxo Principal:
 
@@ -162,4 +255,3 @@ Sistema encerra sessão
 Sistema redireciona para página inicial
 
 Sistema exibe opções de login/cadastro
-
